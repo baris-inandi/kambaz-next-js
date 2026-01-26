@@ -57,9 +57,11 @@ export default function Lab1() {
         </ol>
         My favorite recipe:
         <ol id="wd-your-favorite-recipe">
-          <li>Gather ingredients</li>
-          <li>Prepare your equipment</li>
-          <li>Follow the recipe</li>
+          <li>Mix butter and sugar in a bowl</li>
+          <li>Add eggs and vanilla</li>
+          <li>Stir in flour and chocolate chips</li>
+          <li>Drop spoonfuls onto baking sheet</li>
+          <li>Bake at 375 degrees for 10 minutes</li>
         </ol>
         <h5>Unordered List Tag</h5>
         My favorite books (in no particular order)

@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Dashboard() {
   return (
@@ -10,10 +10,10 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link href="/courses/1234" className="wd-dashboard-course-link">
             <Image
-              src="/images/reactjs.jpg"
+              src="/images/northeastern.jpg"
               width={200}
               height={150}
-              alt="reactjs"
+              alt="course"
             />
             <div>
               <h5> CS1234 React JS </h5>
@@ -27,7 +27,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link href="/courses/5678" className="wd-dashboard-course-link">
             <Image
-              src="/images/reactjs.jpg"
+              src="/images/northeastern.jpg"
               width={200}
               height={150}
               alt="course"
@@ -44,7 +44,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link href="/courses/9012" className="wd-dashboard-course-link">
             <Image
-              src="/images/reactjs.jpg"
+              src="/images/northeastern.jpg"
               width={200}
               height={150}
               alt="course"
@@ -61,7 +61,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link href="/courses/3456" className="wd-dashboard-course-link">
             <Image
-              src="/images/reactjs.jpg"
+              src="/images/northeastern.jpg"
               width={200}
               height={150}
               alt="course"
@@ -78,7 +78,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link href="/courses/7890" className="wd-dashboard-course-link">
             <Image
-              src="/images/reactjs.jpg"
+              src="/images/northeastern.jpg"
               width={200}
               height={150}
               alt="course"
@@ -95,7 +95,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link href="/courses/2468" className="wd-dashboard-course-link">
             <Image
-              src="/images/reactjs.jpg"
+              src="/images/northeastern.jpg"
               width={200}
               height={150}
               alt="course"
@@ -112,7 +112,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link href="/courses/1357" className="wd-dashboard-course-link">
             <Image
-              src="/images/reactjs.jpg"
+              src="/images/northeastern.jpg"
               width={200}
               height={150}
               alt="course"
