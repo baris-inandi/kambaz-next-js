@@ -303,6 +303,15 @@ export default function Lab1() {
       </a>
       <span> to get dummy text</span>
       <br />
+      <a
+        href="https://github.com/baris-inandi/kambaz-next-js"
+        id="wd-github"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub Repository
+      </a>
+      <br />
     </div>
   );
 }
