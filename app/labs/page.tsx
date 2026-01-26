@@ -17,17 +17,17 @@ export default function Labs() {
       <ul>
         <li>
           <Link href="/labs/lab1" id="wd-lab1-link">
-            Lab 1: HTML Examples{" "}
+            Lab 1: HTML Examples
           </Link>
         </li>
         <li>
           <Link href="/labs/lab2" id="wd-lab2-link">
-            Lab 2: CSS Basics{" "}
+            Lab 2: CSS Basics
           </Link>
         </li>
         <li>
           <Link href="/labs/lab3" id="wd-lab3-link">
-            Lab 3: JavaScript Fundamentals{" "}
+            Lab 3: JavaScript Fundamentals
           </Link>
         </li>
       </ul>
