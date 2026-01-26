@@ -49,6 +49,19 @@ export default function AssignmentEditor() {
               <label htmlFor="wd-submission-type">Submission Type</label>
             </td>
             <td>
+              <select id="wd-submission-type" defaultValue="Online">
+                <option value="Online">Online</option>
+                <option value="Text Entry">Text Entry</option>
+                <option value="Media Recording">Media Recording</option>
+                <option value="File Upload">File Upload</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">
+              <label>Online Entry Options</label>
+            </td>
+            <td>
               <input type="checkbox" id="wd-submission-online" defaultChecked />
               <label htmlFor="wd-submission-online">Online</label>
               <br />
