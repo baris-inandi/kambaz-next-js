@@ -1,9 +1,11 @@
 import { ReactNode } from "react";
 import AccountNavigation from "./Navigation";
 
-export default function AccountLayout({
-  children,
-}: Readonly<{ children: ReactNode }>) {
+interface Props {
+  children: ReactNode;
+}
+
+export default function AccountLayout(props: Props) {
   return (
     <div id="wd-kambaz">
       <table>
@@ -13,7 +15,7 @@ export default function AccountLayout({
               <AccountNavigation />
             </td>
             <td valign="top" width="100%">
-              {children}
+              {props.children}
             </td>
           </tr>
         </tbody>

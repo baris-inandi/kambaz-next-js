@@ -1,9 +1,11 @@
 import { ReactNode } from "react";
 import KambazNavigation from "./Navigation";
 
-export default function KambazLayout({
-  children,
-}: Readonly<{ children: ReactNode }>) {
+interface Props {
+  children: ReactNode;
+}
+
+export default function KambazLayout(props: Props) {
   return (
     <table>
       <tbody>
@@ -12,7 +14,7 @@ export default function KambazLayout({
             <KambazNavigation />
           </td>
           <td valign="top" width="100%">
-            {children}
+            {props.children}
           </td>
         </tr>
       </tbody>

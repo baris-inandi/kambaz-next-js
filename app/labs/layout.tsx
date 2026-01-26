@@ -1,9 +1,11 @@
 import { ReactNode } from "react";
 import TOC from "./TOC";
 
-export default function LabsLayout({
-  children,
-}: Readonly<{ children: ReactNode }>) {
+interface Props {
+  children: ReactNode;
+}
+
+export default function LabsLayout(props: Props) {
   return (
     <table>
       <tbody>
@@ -11,7 +13,7 @@ export default function LabsLayout({
           <td valign="top" width="100px">
             <TOC />
           </td>
-          <td valign="top">{children}</td>
+          <td valign="top">{props.children}</td>
         </tr>
       </tbody>
     </table>

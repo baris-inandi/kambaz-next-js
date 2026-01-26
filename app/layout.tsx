@@ -17,17 +17,17 @@ export const metadata: Metadata = {
   description: "CS4550",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface Props {
   children: React.ReactNode;
-}>) {
+}
+
+export default function RootLayout(props: Props) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {props.children}
       </body>
     </html>
   );
