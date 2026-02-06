@@ -28,7 +28,7 @@ export default function AssignmentEditor() {
         />
 
         <Row className="mb-3">
-          <Col sm={3} className="text-end">
+          <Col sm={3} className="text-start">
             <FormLabel htmlFor="wd-points">Points</FormLabel>
           </Col>
           <Col sm={9}>
@@ -37,7 +37,7 @@ export default function AssignmentEditor() {
         </Row>
 
         <Row className="mb-3">
-          <Col sm={3} className="text-end">
+          <Col sm={3} className="text-start">
             <FormLabel htmlFor="wd-assignment-group">
               Assignment Group
             </FormLabel>
@@ -53,7 +53,7 @@ export default function AssignmentEditor() {
         </Row>
 
         <Row className="mb-3">
-          <Col sm={3} className="text-end">
+          <Col sm={3} className="text-start">
             <FormLabel htmlFor="wd-display-grade-as">
               Display Grade as
             </FormLabel>
@@ -68,7 +68,7 @@ export default function AssignmentEditor() {
         </Row>
 
         <Row className="mb-3">
-          <Col sm={3} className="text-end">
+          <Col sm={3} className="text-start">
             <FormLabel htmlFor="wd-submission-type">Submission Type</FormLabel>
           </Col>
           <Col sm={9}>
@@ -82,7 +82,7 @@ export default function AssignmentEditor() {
         </Row>
 
         <Row className="mb-3">
-          <Col sm={3} className="text-end">
+          <Col sm={3} className="text-start">
             <FormLabel htmlFor="wd-assign-to">Assign to</FormLabel>
           </Col>
           <Col sm={9}>
@@ -91,7 +91,7 @@ export default function AssignmentEditor() {
         </Row>
 
         <Row className="mb-3">
-          <Col sm={3} className="text-end">
+          <Col sm={3} className="text-start">
             <FormLabel htmlFor="wd-due-date">Due</FormLabel>
           </Col>
           <Col sm={9}>
@@ -104,7 +104,7 @@ export default function AssignmentEditor() {
         </Row>
 
         <Row className="mb-3">
-          <Col sm={3} className="text-end">
+          <Col sm={3} className="text-start">
             <FormLabel htmlFor="wd-available-from">Available from</FormLabel>
           </Col>
           <Col sm={9}>
@@ -117,7 +117,7 @@ export default function AssignmentEditor() {
         </Row>
 
         <Row className="mb-3">
-          <Col sm={3} className="text-end">
+          <Col sm={3} className="text-start">
             <FormLabel htmlFor="wd-available-until">Until</FormLabel>
           </Col>
           <Col sm={9}>

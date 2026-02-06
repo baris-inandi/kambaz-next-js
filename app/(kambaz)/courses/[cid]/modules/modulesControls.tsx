@@ -35,10 +35,10 @@ export default function ModulesControls() {
             <GreenCheckmark /> Publish modules only
           </DropdownItem>
           <DropdownItem id="wd-unpublish-all-modules-and-items">
-            Unpublish all modules and items
+            <GreenCheckmark /> Unpublish all modules and items
           </DropdownItem>
           <DropdownItem id="wd-unpublish-modules-only">
-            Unpublish modules only
+            <GreenCheckmark /> Unpublish modules only
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>

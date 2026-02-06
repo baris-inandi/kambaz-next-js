@@ -22,7 +22,6 @@ export default function KambazNavigation({
 }: Props) {
   const pathname = usePathname();
 
-  const isAccount = pathname.startsWith("/account");
   const isDashboard = pathname === "/dashboard";
   const isCourses = pathname.startsWith("/courses");
   const isCalendar = pathname.startsWith("/calendar");
@@ -53,18 +52,14 @@ export default function KambazNavigation({
           alt="Northeastern University"
         />
       </ListGroupItem>
-      <ListGroupItem
-        className={`border-0 text-center ${isAccount ? "bg-white" : "bg-black"}`}
-      >
+      <ListGroupItem className="border-0 text-center bg-black">
         <Link
           href="/account"
           id={includeIds ? "wd-account-link" : undefined}
-          className={`${isAccount ? "text-danger" : "text-white"} text-decoration-none`}
+          className="text-white text-decoration-none"
           onClick={onNavigate}
         >
-          <FaRegCircleUser
-            className={`fs-1 ${isAccount ? "text-danger" : "text-white"}`}
-          />
+          <FaRegCircleUser className="fs-1 text-white" />
           <br />
           Account
         </Link>
