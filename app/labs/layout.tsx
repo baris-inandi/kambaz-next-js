@@ -10,7 +10,7 @@ export default function LabsLayout(props: Props) {
     <table>
       <tbody>
         <tr>
-          <td valign="top" width="100px">
+          <td valign="top" width="200px">
             <TOC />
           </td>
           <td valign="top">{props.children}</td>
