@@ -32,8 +32,8 @@ export default function Lab2() {
         <h3>Styling with the STYLE attribute</h3>
         <p>
           Style attribute allows configuring look and feel right on the element.
-          Although it&apos;s very convenient it is considered bad practice and you
-          should avoid using the style attribute.
+          Although it&apos;s very convenient it is considered bad practice and
+          you should avoid using the style attribute.
         </p>
 
         <Selectors />
@@ -57,7 +57,8 @@ export default function Lab2() {
         <hr />
         <h3>Tailwind Exercises</h3>
         <p>
-          Continue with the Tailwind section here: <Link href="/labs/lab2/tailwind">Lab 2 Tailwind</Link>
+          Continue with the Tailwind section here:{" "}
+          <Link href="/labs/lab2/tailwind">Lab 2 Tailwind</Link>
         </p>
 
         <hr />
