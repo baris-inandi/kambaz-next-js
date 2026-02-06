@@ -76,8 +76,7 @@ export default function Dashboard() {
                   <CardImg
                     variant="top"
                     src="/images/reactjs.jpg"
-                    width="100%"
-                    height={160}
+                    style={{ height: "160px", objectFit: "cover" }}
                   />
                   <CardBody>
                     <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
