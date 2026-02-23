@@ -1,9 +1,10 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import { usePathname } from "next/navigation";
 import { FaAlignJustify, FaXmark } from "react-icons/fa6";
 import KambazNavigation from "../../Navigation";
+import CourseBreadcrumbs from "./Breadcrumbs";
 import CourseNavigation from "./Navigation";
 
 interface Props {
@@ -15,6 +16,10 @@ export default function CourseShell({ cid, children }: Props) {
   const pathname = usePathname();
   const [showKambazNavigation, setShowKambazNavigation] = useState(false);
   const [showCourseNavigation, setShowCourseNavigation] = useState(false);
+  const showBreadcrumbs =
+    pathname.startsWith(`/courses/${cid}/home`) ||
+    pathname.startsWith(`/courses/${cid}/modules`) ||
+    pathname.startsWith(`/courses/${cid}/assignments`);
 
   const closeMenus = () => {
     setShowKambazNavigation(false);
@@ -30,10 +35,6 @@ export default function CourseShell({ cid, children }: Props) {
     setShowKambazNavigation(false);
     setShowCourseNavigation(true);
   };
-
-  useEffect(() => {
-    closeMenus();
-  }, [pathname]);
 
   return (
     <div id="wd-courses">
@@ -67,7 +68,10 @@ export default function CourseShell({ cid, children }: Props) {
         <div className="d-none d-md-block">
           <CourseNavigation cid={cid} />
         </div>
-        <div className="flex-fill">{children}</div>
+        <div className="flex-fill">
+          {showBreadcrumbs && <CourseBreadcrumbs cid={cid} />}
+          {children}
+        </div>
       </div>
 
       {showKambazNavigation && (

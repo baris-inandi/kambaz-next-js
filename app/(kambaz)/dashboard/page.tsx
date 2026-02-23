@@ -9,51 +9,16 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-
-const courses = [
-  {
-    id: "1234",
-    title: "CS1234 React JS",
-    description: "Full Stack software developer",
-  },
-  {
-    id: "5678",
-    title: "CS5678 Node.js",
-    description: "Server-side JavaScript development",
-  },
-  {
-    id: "9012",
-    title: "CS9012 MongoDB",
-    description: "Database management and design",
-  },
-  {
-    id: "3456",
-    title: "CS3456 TypeScript",
-    description: "Type-safe JavaScript development",
-  },
-  {
-    id: "7890",
-    title: "CS7890 Express.js",
-    description: "Web application framework",
-  },
-  {
-    id: "2468",
-    title: "CS2468 Next.js",
-    description: "React framework for production",
-  },
-  {
-    id: "1357",
-    title: "CS1357 Web Development",
-    description: "Complete web development course",
-  },
-];
+import * as db from "../database";
 
 export default function Dashboard() {
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1>
       <hr />
-      <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
+      <h2 id="wd-dashboard-published">
+        Published Courses ({db.courses.length})
+      </h2>
       <hr />
       <div id="wd-dashboard-courses">
         <Row
@@ -62,25 +27,25 @@ export default function Dashboard() {
           className="g-0"
           style={{ rowGap: "32px", columnGap: "30px" }}
         >
-          {courses.map((course) => (
+          {db.courses.map((course) => (
             <Col
               className="wd-dashboard-course"
               style={{ width: "300px" }}
-              key={course.id}
+              key={course._id}
             >
               <Card>
                 <Link
-                  href="/courses/1234/home"
+                  href={`/courses/${course._id}/home`}
                   className="wd-dashboard-course-link text-decoration-none text-dark"
                 >
                   <CardImg
                     variant="top"
-                    src="/images/reactjs.jpg"
+                    src={course.image || "/images/reactjs.jpg"}
                     style={{ height: "160px", objectFit: "cover" }}
                   />
                   <CardBody>
                     <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
-                      {course.title}
+                      {course.number} {course.name}
                     </CardTitle>
                     <CardText
                       className="wd-dashboard-course-description overflow-hidden"

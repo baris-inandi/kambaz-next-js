@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Button,
   Col,
@@ -7,15 +8,30 @@ import {
   FormSelect,
   Row,
 } from "react-bootstrap";
+import { notFound } from "next/navigation";
+import * as db from "../../../../database";
 
-export default function AssignmentEditor() {
+interface Props {
+  params: Promise<{ cid: string; aid: string }>;
+}
+
+export default async function AssignmentEditor(props: Props) {
+  const { cid, aid } = await props.params;
+  const assignment = db.assignments.find(
+    (item) => item._id === aid && item.course === cid,
+  );
+
+  if (!assignment) {
+    notFound();
+  }
+
   return (
     <div id="wd-assignments-editor" className="container">
       <Form>
         <FormLabel htmlFor="wd-name">Assignment Name</FormLabel>
         <FormControl
           id="wd-name"
-          defaultValue="A1 - ENV + HTML"
+          defaultValue={assignment.title}
           className="mb-2"
         />
 
@@ -24,7 +40,7 @@ export default function AssignmentEditor() {
           id="wd-description"
           rows={4}
           className="mb-3"
-          defaultValue="The assignment is available online. Submit a link to the landing page."
+          defaultValue={assignment.description}
         />
 
         <Row className="mb-3">
@@ -32,7 +48,11 @@ export default function AssignmentEditor() {
             <FormLabel htmlFor="wd-points">Points</FormLabel>
           </Col>
           <Col sm={9}>
-            <FormControl type="number" id="wd-points" defaultValue={100} />
+            <FormControl
+              type="number"
+              id="wd-points"
+              defaultValue={assignment.points}
+            />
           </Col>
         </Row>
 
@@ -43,7 +63,10 @@ export default function AssignmentEditor() {
             </FormLabel>
           </Col>
           <Col sm={9}>
-            <FormSelect id="wd-assignment-group" defaultValue="ASSIGNMENTS">
+            <FormSelect
+              id="wd-assignment-group"
+              defaultValue={assignment.assignmentGroup}
+            >
               <option value="ASSIGNMENTS">ASSIGNMENTS</option>
               <option value="QUIZZES">QUIZZES</option>
               <option value="EXAMS">EXAMS</option>
@@ -59,7 +82,10 @@ export default function AssignmentEditor() {
             </FormLabel>
           </Col>
           <Col sm={9}>
-            <FormSelect id="wd-display-grade-as" defaultValue="Percentage">
+            <FormSelect
+              id="wd-display-grade-as"
+              defaultValue={assignment.displayGradeAs}
+            >
               <option value="Percentage">Percentage</option>
               <option value="Points">Points</option>
               <option value="Letter">Letter</option>
@@ -72,7 +98,10 @@ export default function AssignmentEditor() {
             <FormLabel htmlFor="wd-submission-type">Submission Type</FormLabel>
           </Col>
           <Col sm={9}>
-            <FormSelect id="wd-submission-type" defaultValue="Online">
+            <FormSelect
+              id="wd-submission-type"
+              defaultValue={assignment.submissionType}
+            >
               <option value="Online">Online</option>
               <option value="Text Entry">Text Entry</option>
               <option value="Media Recording">Media Recording</option>
@@ -86,7 +115,7 @@ export default function AssignmentEditor() {
             <FormLabel htmlFor="wd-assign-to">Assign to</FormLabel>
           </Col>
           <Col sm={9}>
-            <FormControl defaultValue="Everyone" id="wd-assign-to" />
+            <FormControl defaultValue={assignment.assignTo} id="wd-assign-to" />
           </Col>
         </Row>
 
@@ -98,7 +127,7 @@ export default function AssignmentEditor() {
             <FormControl
               type="date"
               id="wd-due-date"
-              defaultValue="2024-12-31"
+              defaultValue={assignment.dueDate}
             />
           </Col>
         </Row>
@@ -111,7 +140,7 @@ export default function AssignmentEditor() {
             <FormControl
               type="date"
               id="wd-available-from"
-              defaultValue="2024-01-01"
+              defaultValue={assignment.availableFrom}
             />
           </Col>
         </Row>
@@ -124,16 +153,27 @@ export default function AssignmentEditor() {
             <FormControl
               type="date"
               id="wd-available-until"
-              defaultValue="2024-12-31"
+              defaultValue={assignment.availableUntil}
             />
           </Col>
         </Row>
 
         <div className="text-end">
-          <Button variant="secondary" className="me-2">
+          <Button
+            as={Link}
+            href={`/courses/${cid}/assignments`}
+            variant="secondary"
+            className="me-2"
+          >
             Cancel
           </Button>
-          <Button variant="danger">Save</Button>
+          <Button
+            as={Link}
+            href={`/courses/${cid}/assignments`}
+            variant="danger"
+          >
+            Save
+          </Button>
         </div>
       </Form>
     </div>

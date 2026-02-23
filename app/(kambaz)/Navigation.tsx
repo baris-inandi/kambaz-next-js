@@ -8,6 +8,7 @@ import { FaFlask, FaInbox } from "react-icons/fa";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LiaBookSolid } from "react-icons/lia";
+import * as db from "./database";
 
 interface Props {
   variant?: "desktop" | "mobile";
@@ -21,12 +22,45 @@ export default function KambazNavigation({
   onNavigate,
 }: Props) {
   const pathname = usePathname();
+  const firstCourseId = db.courses[0]?._id || "RS101";
 
-  const isDashboard = pathname === "/dashboard";
-  const isCourses = pathname.startsWith("/courses");
-  const isCalendar = pathname.startsWith("/calendar");
-  const isInbox = pathname.startsWith("/inbox");
-  const isLabs = pathname.startsWith("/labs");
+  const links = [
+    {
+      label: "Dashboard",
+      path: "/dashboard",
+      icon: AiOutlineDashboard,
+      id: "wd-dashboard-link",
+      active: pathname === "/dashboard",
+    },
+    {
+      label: "Courses",
+      path: `/courses/${firstCourseId}/home`,
+      icon: LiaBookSolid,
+      id: "wd-course-link",
+      active: pathname.startsWith("/courses"),
+    },
+    {
+      label: "Calendar",
+      path: "/calendar",
+      icon: IoCalendarOutline,
+      id: "wd-calendar-link",
+      active: pathname.startsWith("/calendar"),
+    },
+    {
+      label: "Inbox",
+      path: "/inbox",
+      icon: FaInbox,
+      id: "wd-inbox-link",
+      active: pathname.startsWith("/inbox"),
+    },
+    {
+      label: "Labs",
+      path: "/labs",
+      icon: FaFlask,
+      id: "wd-labs-link",
+      active: pathname.startsWith("/labs"),
+    },
+  ];
 
   const rootClasses =
     variant === "desktop"
@@ -52,6 +86,7 @@ export default function KambazNavigation({
           alt="Northeastern University"
         />
       </ListGroupItem>
+
       <ListGroupItem className="border-0 text-center bg-black">
         <Link
           href="/account"
@@ -64,76 +99,27 @@ export default function KambazNavigation({
           Account
         </Link>
       </ListGroupItem>
-      <ListGroupItem
-        className={`border-0 text-center ${isDashboard ? "bg-white" : "bg-black"}`}
-      >
-        <Link
-          href="/dashboard"
-          id={includeIds ? "wd-dashboard-link" : undefined}
-          className={`${isDashboard ? "text-danger" : "text-white"} text-decoration-none`}
-          onClick={onNavigate}
-        >
-          <AiOutlineDashboard className="fs-1 text-danger" />
-          <br />
-          Dashboard
-        </Link>
-      </ListGroupItem>
-      <ListGroupItem
-        className={`border-0 text-center ${isCourses ? "bg-white" : "bg-black"}`}
-      >
-        <Link
-          href="/courses/1234/home"
-          id={includeIds ? "wd-course-link" : undefined}
-          className={`${isCourses ? "text-danger" : "text-white"} text-decoration-none`}
-          onClick={onNavigate}
-        >
-          <LiaBookSolid className="fs-1 text-danger" />
-          <br />
-          Courses
-        </Link>
-      </ListGroupItem>
-      <ListGroupItem
-        className={`border-0 text-center ${isCalendar ? "bg-white" : "bg-black"}`}
-      >
-        <Link
-          href="/calendar"
-          id={includeIds ? "wd-calendar-link" : undefined}
-          className={`${isCalendar ? "text-danger" : "text-white"} text-decoration-none`}
-          onClick={onNavigate}
-        >
-          <IoCalendarOutline className="fs-1 text-danger" />
-          <br />
-          Calendar
-        </Link>
-      </ListGroupItem>
-      <ListGroupItem
-        className={`border-0 text-center ${isInbox ? "bg-white" : "bg-black"}`}
-      >
-        <Link
-          href="/inbox"
-          id={includeIds ? "wd-inbox-link" : undefined}
-          className={`${isInbox ? "text-danger" : "text-white"} text-decoration-none`}
-          onClick={onNavigate}
-        >
-          <FaInbox className="fs-1 text-danger" />
-          <br />
-          Inbox
-        </Link>
-      </ListGroupItem>
-      <ListGroupItem
-        className={`border-0 text-center ${isLabs ? "bg-white" : "bg-black"}`}
-      >
-        <Link
-          href="/labs"
-          id={includeIds ? "wd-labs-link" : undefined}
-          className={`${isLabs ? "text-danger" : "text-white"} text-decoration-none`}
-          onClick={onNavigate}
-        >
-          <FaFlask className="fs-1 text-danger" />
-          <br />
-          Labs
-        </Link>
-      </ListGroupItem>
+
+      {links.map((link) => {
+        const Icon = link.icon;
+        return (
+          <ListGroupItem
+            key={link.label}
+            className={`border-0 text-center ${link.active ? "bg-white" : "bg-black"}`}
+          >
+            <Link
+              href={link.path}
+              id={includeIds ? link.id : undefined}
+              className={`${link.active ? "text-danger" : "text-white"} text-decoration-none`}
+              onClick={onNavigate}
+            >
+              <Icon className="fs-1 text-danger" />
+              <br />
+              {link.label}
+            </Link>
+          </ListGroupItem>
+        );
+      })}
     </ListGroup>
   );
 }

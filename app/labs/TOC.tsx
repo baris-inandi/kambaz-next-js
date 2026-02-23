@@ -14,7 +14,7 @@ export default function TOC() {
           href="/labs"
           as={Link}
           id="wd-home-link"
-          className={`nav-link ${pathname.endsWith("/labs") ? "active" : ""}`}
+          className={`nav-link ${pathname === "/labs" ? "active" : ""}`}
         >
           Labs
         </NavLink>
@@ -24,7 +24,7 @@ export default function TOC() {
           href="/labs/lab1"
           as={Link}
           id="wd-lab1-link"
-          className={`nav-link ${pathname.endsWith("/lab1") ? "active" : ""}`}
+          className={`nav-link ${pathname.startsWith("/labs/lab1") ? "active" : ""}`}
         >
           Lab 1
         </NavLink>
@@ -34,7 +34,7 @@ export default function TOC() {
           href="/labs/lab2"
           as={Link}
           id="wd-lab2-link"
-          className={`nav-link ${pathname.endsWith("/lab2") ? "active" : ""}`}
+          className={`nav-link ${pathname.startsWith("/labs/lab2") ? "active" : ""}`}
         >
           Lab 2
         </NavLink>
@@ -44,7 +44,7 @@ export default function TOC() {
           href="/labs/lab3"
           as={Link}
           id="wd-lab3-link"
-          className={`nav-link ${pathname.endsWith("/lab3") ? "active" : ""}`}
+          className={`nav-link ${pathname.startsWith("/labs/lab3") ? "active" : ""}`}
         >
           Lab 3
         </NavLink>

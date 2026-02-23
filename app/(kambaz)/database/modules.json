@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "M101",
+    "course": "RS101",
+    "name": "Week 1",
+    "lessons": [
+      { "_id": "L101", "name": "LEARNING OBJECTIVES" },
+      { "_id": "L102", "name": "Introduction to the course" },
+      { "_id": "L103", "name": "Learn what is Web Development" }
+    ]
+  },
+  {
+    "_id": "M102",
+    "course": "RS101",
+    "name": "Week 2",
+    "lessons": [
+      { "_id": "L104", "name": "READING" },
+      { "_id": "L105", "name": "Introduction to CSS" },
+      { "_id": "L106", "name": "Styling with Bootstrap" }
+    ]
+  },
+  {
+    "_id": "M201",
+    "course": "RS102",
+    "name": "Week 1",
+    "lessons": [
+      { "_id": "L201", "name": "Node runtime and npm" },
+      { "_id": "L202", "name": "Express fundamentals" },
+      { "_id": "L203", "name": "Routing and middleware" }
+    ]
+  },
+  {
+    "_id": "M301",
+    "course": "RS103",
+    "name": "Week 1",
+    "lessons": [
+      { "_id": "L301", "name": "NoSQL data modeling" },
+      { "_id": "L302", "name": "Collections and documents" },
+      { "_id": "L303", "name": "Indexing strategies" }
+    ]
+  },
+  {
+    "_id": "M401",
+    "course": "RS104",
+    "name": "Week 1",
+    "lessons": [
+      { "_id": "L401", "name": "Types and interfaces" },
+      { "_id": "L402", "name": "Generics" },
+      { "_id": "L403", "name": "Type narrowing" }
+    ]
+  },
+  {
+    "_id": "M501",
+    "course": "RS106",
+    "name": "Week 1",
+    "lessons": [
+      { "_id": "L501", "name": "File-system routing" },
+      { "_id": "L502", "name": "Layouts and navigation" },
+      { "_id": "L503", "name": "Server and client components" }
+    ]
+  }
+]

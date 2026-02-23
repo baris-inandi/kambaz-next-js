@@ -2,40 +2,24 @@ import Link from "next/link";
 import { Button, FormControl, ListGroup, ListGroupItem } from "react-bootstrap";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
+import * as db from "../../../database";
 
 interface Props {
   params: Promise<{ cid: string }>;
 }
 
-const assignments = [
-  {
-    id: "123",
-    title: "A1 - ENV + HTML",
-    subtext:
-      "Multiple Modules | Not available until May 6 at 12:00am | Due May 13 at 11:59pm | 100 pts",
-  },
-  {
-    id: "124",
-    title: "A2 - CSS",
-    subtext:
-      "Multiple Modules | Not available until May 13 at 12:00am | Due May 20 at 11:59pm | 100 pts",
-  },
-  {
-    id: "125",
-    title: "A3 - JAVASCRIPT",
-    subtext:
-      "Multiple Modules | Not available until May 20 at 12:00am | Due May 27 at 11:59pm | 100 pts",
-  },
-  {
-    id: "126",
-    title: "A4 - REDUX",
-    subtext:
-      "Multiple Modules | Not available until May 27 at 12:00am | Due Jun 3 at 11:59pm | 100 pts",
-  },
-];
+function formatDate(dateString: string) {
+  return new Date(`${dateString}T00:00:00`).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+}
 
 export default async function Assignments(props: Props) {
   const { cid } = await props.params;
+  const courseAssignments = db.assignments.filter(
+    (assignment) => assignment.course === cid,
+  );
 
   return (
     <div id="wd-assignments">
@@ -67,20 +51,25 @@ export default async function Assignments(props: Props) {
       </h3>
 
       <ListGroup id="wd-assignment-list" className="rounded-0">
-        {assignments.map((assignment) => (
+        {courseAssignments.map((assignment) => (
           <ListGroupItem
-            key={assignment.id}
+            key={assignment._id}
             className="wd-assignment-list-item"
           >
             <div className="d-flex justify-content-between align-items-start">
               <div>
                 <Link
-                  href={`/courses/${cid}/assignments/${assignment.id}`}
+                  href={`/courses/${cid}/assignments/${assignment._id}`}
                   className="wd-assignment-link text-decoration-none"
                 >
                   {assignment.title}
                 </Link>
-                <div className="small text-muted">{assignment.subtext}</div>
+                <div className="small text-muted">
+                  Multiple Modules | Not available until{" "}
+                  {formatDate(assignment.availableFrom)} at 12:00am | Due{" "}
+                  {formatDate(assignment.dueDate)} at 11:59pm |{" "}
+                  {assignment.points} pts
+                </div>
               </div>
               <IoEllipsisVertical className="fs-4" />
             </div>
