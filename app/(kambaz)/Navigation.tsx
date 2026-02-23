@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
@@ -8,7 +9,6 @@ import { FaFlask, FaInbox } from "react-icons/fa";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LiaBookSolid } from "react-icons/lia";
-import * as db from "./database";
 
 interface Props {
   variant?: "desktop" | "mobile";
@@ -22,8 +22,6 @@ export default function KambazNavigation({
   onNavigate,
 }: Props) {
   const pathname = usePathname();
-  const firstCourseId = db.courses[0]?._id || "RS101";
-
   const links = [
     {
       label: "Dashboard",
@@ -34,7 +32,7 @@ export default function KambazNavigation({
     },
     {
       label: "Courses",
-      path: `/courses/${firstCourseId}/home`,
+      path: "/dashboard",
       icon: LiaBookSolid,
       id: "wd-course-link",
       active: pathname.startsWith("/courses"),
@@ -80,9 +78,10 @@ export default function KambazNavigation({
         href="https://www.northeastern.edu/"
         id={includeIds ? "wd-neu-link" : undefined}
       >
-        <img
+        <Image
           src="/images/northeastern.jpg"
-          width="75px"
+          width={75}
+          height={75}
           alt="Northeastern University"
         />
       </ListGroupItem>

@@ -82,5 +82,61 @@
     "availableFrom": "2024-05-06",
     "dueDate": "2024-05-13",
     "availableUntil": "2024-05-14"
+  },
+  {
+    "_id": "A401",
+    "course": "RS104",
+    "title": "TypeScript Fundamentals",
+    "description": "Implement typed utilities and refactor components with TypeScript.",
+    "points": 100,
+    "assignmentGroup": "ASSIGNMENTS",
+    "displayGradeAs": "Percentage",
+    "submissionType": "Online",
+    "assignTo": "Everyone",
+    "availableFrom": "2024-05-06",
+    "dueDate": "2024-05-13",
+    "availableUntil": "2024-05-14"
+  },
+  {
+    "_id": "A501",
+    "course": "RS105",
+    "title": "Express Services",
+    "description": "Create Express routes with validation and error handling.",
+    "points": 100,
+    "assignmentGroup": "ASSIGNMENTS",
+    "displayGradeAs": "Percentage",
+    "submissionType": "Online",
+    "assignTo": "Everyone",
+    "availableFrom": "2024-05-06",
+    "dueDate": "2024-05-13",
+    "availableUntil": "2024-05-14"
+  },
+  {
+    "_id": "A601",
+    "course": "RS106",
+    "title": "Next.js Routes",
+    "description": "Build app router layouts and data-driven screens.",
+    "points": 100,
+    "assignmentGroup": "ASSIGNMENTS",
+    "displayGradeAs": "Percentage",
+    "submissionType": "Online",
+    "assignTo": "Everyone",
+    "availableFrom": "2024-05-06",
+    "dueDate": "2024-05-13",
+    "availableUntil": "2024-05-14"
+  },
+  {
+    "_id": "A701",
+    "course": "RS107",
+    "title": "Web Capstone",
+    "description": "Plan and outline a full-stack web application.",
+    "points": 100,
+    "assignmentGroup": "ASSIGNMENTS",
+    "displayGradeAs": "Percentage",
+    "submissionType": "Online",
+    "assignTo": "Everyone",
+    "availableFrom": "2024-05-06",
+    "dueDate": "2024-05-13",
+    "availableUntil": "2024-05-14"
   }
 ]

@@ -1,9 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import {
-  Button,
   Col,
   Form,
   FormControl,
@@ -15,7 +14,6 @@ import * as db from "../../../../database";
 
 export default function AssignmentEditor() {
   const params = useParams<{ cid: string; aid: string }>();
-  const router = useRouter();
   const cid = Array.isArray(params.cid) ? params.cid[0] : params.cid;
   const aid = Array.isArray(params.aid) ? params.aid[0] : params.aid;
   const assignment = db.assignments.find(
@@ -164,19 +162,15 @@ export default function AssignmentEditor() {
         </Row>
 
         <div className="text-end">
-          <Button
-            variant="secondary"
-            className="me-2"
-            onClick={() => router.push(`/courses/${cid}/assignments`)}
+          <Link
+            href={`/courses/${cid}/assignments`}
+            className="btn btn-secondary me-2"
           >
             Cancel
-          </Button>
-          <Button
-            variant="danger"
-            onClick={() => router.push(`/courses/${cid}/assignments`)}
-          >
+          </Link>
+          <Link href={`/courses/${cid}/assignments`} className="btn btn-danger">
             Save
-          </Button>
+          </Link>
         </div>
       </Form>
     </div>
