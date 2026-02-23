@@ -85,9 +85,10 @@ export default function Lab3() {
       <Square>4</Square>
       <hr />
       <Highlight>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit ratione eaque illo minus
-        cum, saepe totam vel nihil repellat nemo explicabo excepturi consectetur. Modi omnis minus
-        sequi maiores, provident voluptates.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
+        ratione eaque illo minus cum, saepe totam vel nihil repellat nemo
+        explicabo excepturi consectetur. Modi omnis minus sequi maiores,
+        provident voluptates.
       </Highlight>
       <hr />
       <PathParameters />
@@ -96,7 +97,9 @@ export default function Lab3() {
       <TodoList />
 
       <h3>3.9 Debugging</h3>
-      <p>Open browser developer tools and check the console for logged output.</p>
+      <p>
+        Open browser developer tools and check the console for logged output.
+      </p>
     </div>
   );
 }

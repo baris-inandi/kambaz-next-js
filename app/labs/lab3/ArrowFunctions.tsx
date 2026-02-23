@@ -5,10 +5,8 @@ export default function ArrowFunctions() {
 
   return (
     <div id="wd-arrow-functions">
-      <h4>Arrow Functions</h4>
-      3 + 6 = {add(3, 6)}
-      <br />
-      9 - 5 = {subtract(9, 5)}
+      <h4>Arrow Functions</h4>3 + 6 = {add(3, 6)}
+      <br />9 - 5 = {subtract(9, 5)}
       <br />
       square(4) = {square(4)}
       <hr />

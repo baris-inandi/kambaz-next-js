@@ -1,3 +1,5 @@
+// i disabled in two lines below to adhere to the hw instructions without my linter warning me
+
 export default function VariablesAndConstants() {
   // eslint-disable-next-line no-var
   var functionScoped = 2;

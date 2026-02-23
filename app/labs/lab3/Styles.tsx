@@ -15,7 +15,13 @@ export default function Styles() {
   return (
     <div id="wd-styles">
       <h4>Styles</h4>
-      <div style={{ backgroundColor: "lightyellow", color: "black", padding: "10px" }}>
+      <div
+        style={{
+          backgroundColor: "lightyellow",
+          color: "black",
+          padding: "10px",
+        }}
+      >
         Yellow background
       </div>
       <div style={bgRed}>Red background</div>

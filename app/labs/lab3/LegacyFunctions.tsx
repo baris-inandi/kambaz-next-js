@@ -9,10 +9,8 @@ export default function LegacyFunctions() {
 
   return (
     <div id="wd-legacy-functions">
-      <h4>Legacy Functions</h4>
-      2 + 4 = {add(2, 4)}
-      <br />
-      5 - 3 = {subtract(5, 3)}
+      <h4>Legacy Functions</h4>2 + 4 = {add(2, 4)}
+      <br />5 - 3 = {subtract(5, 3)}
       <hr />
     </div>
   );
