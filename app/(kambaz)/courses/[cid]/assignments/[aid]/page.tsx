@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import {
   Button,
   Col,
@@ -8,21 +11,22 @@ import {
   FormSelect,
   Row,
 } from "react-bootstrap";
-import { notFound } from "next/navigation";
 import * as db from "../../../../database";
 
-interface Props {
-  params: Promise<{ cid: string; aid: string }>;
-}
-
-export default async function AssignmentEditor(props: Props) {
-  const { cid, aid } = await props.params;
+export default function AssignmentEditor() {
+  const params = useParams<{ cid: string; aid: string }>();
+  const cid = Array.isArray(params.cid) ? params.cid[0] : params.cid;
+  const aid = Array.isArray(params.aid) ? params.aid[0] : params.aid;
   const assignment = db.assignments.find(
     (item) => item._id === aid && item.course === cid,
   );
 
-  if (!assignment) {
-    notFound();
+  if (!cid || !aid || !assignment) {
+    return (
+      <div id="wd-assignments-editor" className="container">
+        <h3>Assignment not found</h3>
+      </div>
+    );
   }
 
   return (

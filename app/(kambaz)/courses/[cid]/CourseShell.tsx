@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react";
 import { usePathname } from "next/navigation";
 import { FaAlignJustify, FaXmark } from "react-icons/fa6";
 import KambazNavigation from "../../Navigation";
+import * as db from "../../database";
 import CourseBreadcrumbs from "./Breadcrumbs";
 import CourseNavigation from "./Navigation";
 
@@ -16,6 +17,8 @@ export default function CourseShell({ cid, children }: Props) {
   const pathname = usePathname();
   const [showKambazNavigation, setShowKambazNavigation] = useState(false);
   const [showCourseNavigation, setShowCourseNavigation] = useState(false);
+  const course = db.courses.find((c) => c._id === cid);
+  const courseLabel = course ? `${course.number} ${course.name}` : cid;
   const showBreadcrumbs =
     pathname.startsWith(`/courses/${cid}/home`) ||
     pathname.startsWith(`/courses/${cid}/modules`) ||
@@ -47,7 +50,7 @@ export default function CourseShell({ cid, children }: Props) {
         >
           <FaAlignJustify className="fs-4" />
         </button>
-        <h2 className="text-danger m-0 fs-5">Course {cid}</h2>
+        <h2 className="text-danger m-0 fs-5">{courseLabel}</h2>
         <button
           id="wd-show-course-navigation"
           className="btn btn-link text-danger p-0"
@@ -60,7 +63,7 @@ export default function CourseShell({ cid, children }: Props) {
 
       <h2 className="text-danger d-none d-md-block">
         <FaAlignJustify className="me-4 fs-4 mb-1" />
-        Course {cid}
+        {courseLabel}
       </h2>
       <hr />
 
