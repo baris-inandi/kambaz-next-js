@@ -11,6 +11,7 @@ import DateStateVariable from "./DateStateVariable";
 import ObjectStateVariable from "./ObjectStateVariable";
 import ArrayStateVariable from "./ArrayStateVariable";
 import ParentStateComponent from "./ParentStateComponent";
+import TodoList from "./redux/todos/TodoList";
 
 export default function Lab4() {
   function sayHello() {
@@ -28,25 +29,19 @@ export default function Lab4() {
           href="/labs/lab4/react-context"
           className="btn btn-outline-secondary me-2"
         >
-          React Context
+          React Context Examples
         </Link>
         <Link
           href="/labs/lab4/zustand"
           className="btn btn-outline-success me-2"
         >
-          Zustand
+          Zustand Examples
         </Link>
         <Link
-          href="/labs/lab4/url-encoding/query-params?a=34&b=23"
+          href="/labs/lab4/query-parameters"
           className="btn btn-outline-dark me-2"
         >
-          Query Params
-        </Link>
-        <Link
-          href="/labs/lab4/url-encoding/path-params/7/8"
-          className="btn btn-outline-warning"
-        >
-          Path Params
+          URL Encoding
         </Link>
       </div>
 
@@ -60,6 +55,7 @@ export default function Lab4() {
       <ObjectStateVariable />
       <ArrayStateVariable />
       <ParentStateComponent />
+      <TodoList />
     </div>
   );
 }

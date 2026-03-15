@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Button, FormControl, ListGroup, ListGroupItem } from "react-bootstrap";
+import { RootState } from "./store";
 
 export default function ArrayStateVariable() {
   const [elements, setElements] = useState<number[]>([1, 2, 3]);
   const [newElement, setNewElement] = useState(4);
+  const { todos } = useSelector((state: RootState) => state.todosReducer);
 
   const addElement = () => {
     setElements([...elements, newElement]);
@@ -42,6 +45,12 @@ export default function ArrayStateVariable() {
               Delete
             </Button>
           </ListGroupItem>
+        ))}
+      </ListGroup>
+      <h3>Todos from Redux</h3>
+      <ListGroup className="mb-2">
+        {todos.map((todo) => (
+          <ListGroupItem key={todo.id}>{todo.title}</ListGroupItem>
         ))}
       </ListGroup>
       <hr />

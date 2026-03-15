@@ -1,26 +1,27 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 interface CounterContextValue {
   count: number;
-  increase: (by: number) => void;
-  decrease: (by: number) => void;
+  increment: () => void;
+  decrement: () => void;
 }
 
-const CounterContext = createContext<CounterContextValue | null>(null);
+const CounterContext = createContext<CounterContextValue | undefined>(
+  undefined,
+);
 
 export function CounterProvider({ children }: { children: ReactNode }) {
   const [count, setCount] = useState(0);
 
-  const value = useMemo(
-    () => ({
-      count,
-      increase: (by: number) => setCount((current) => current + by),
-      decrease: (by: number) => setCount((current) => current - by),
-    }),
-    [count],
-  );
+  const increment = () => setCount((prev) => prev + 1);
+  const decrement = () => setCount((prev) => prev - 1);
+  const value: CounterContextValue = {
+    count,
+    increment,
+    decrement,
+  };
 
   return (
     <CounterContext.Provider value={value}>{children}</CounterContext.Provider>

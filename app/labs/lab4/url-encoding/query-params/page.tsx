@@ -1,33 +1,26 @@
 "use client";
 
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-export default function QueryParamsPage() {
+export default function QueryCalculator() {
   const searchParams = useSearchParams();
-  const a = Number(searchParams.get("a") || 0);
-  const b = Number(searchParams.get("b") || 0);
+  const aRaw = searchParams.get("a") || "0";
+  const bRaw = searchParams.get("b") || "0";
+  const a = parseFloat(aRaw);
+  const b = parseFloat(bRaw);
+  const sum = a + b;
 
   return (
-    <div id="wd-query-params" className="container">
-      <h2>Query Search Parameters</h2>
-      <div className="mb-3">
-        <Link
-          href="/labs/lab4/url-encoding/query-params?a=12&b=34"
-          className="btn btn-primary me-2"
-        >
-          12 + 34
-        </Link>
-        <Link
-          href="/labs/lab4/url-encoding/query-params?a=56&b=78"
-          className="btn btn-secondary"
-        >
-          56 + 78
-        </Link>
-      </div>
-      <h3>
-        {a} + {b} = {a + b}
-      </h3>
+    <div style={{ padding: 40 }}>
+      <h1>Calculator - Query Parameters</h1>
+      Raw query values (already decoded by Next.js):
+      <p>
+        a = <code>{aRaw}</code>
+      </p>
+      <p>
+        b = <code>{bRaw}</code>
+      </p>
+      <h2 style={{ color: "green" }}>Sum = {sum}</h2>
     </div>
   );
 }

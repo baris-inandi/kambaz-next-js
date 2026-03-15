@@ -1,29 +1,29 @@
 "use client";
 
-import { CounterProvider, useCounter } from "./context";
+import { useCounter } from "./context";
 
-function CounterView() {
-  const { count, increase, decrease } = useCounter();
+export default function CounterContext() {
+  const { count, increment, decrement } = useCounter();
 
   return (
-    <div id="wd-context-counter" className="mb-4">
-      <h3>Counter Context</h3>
+    <div id="wd-counter-context" className="mb-4">
+      <h2>Counter Context</h2>
       <h4>{count}</h4>
-      <button onClick={() => increase(5)} className="btn btn-success me-2">
-        Increase by 5
+      <button
+        onClick={increment}
+        id="wd-counter-context-increment-click"
+        className="btn btn-success me-2"
+      >
+        Increment
       </button>
-      <button onClick={() => decrease(2)} className="btn btn-danger">
-        Decrease by 2
+      <button
+        onClick={decrement}
+        id="wd-counter-context-decrement-click"
+        className="btn btn-danger"
+      >
+        Decrement
       </button>
       <hr />
     </div>
-  );
-}
-
-export default function CounterContextExample() {
-  return (
-    <CounterProvider>
-      <CounterView />
-    </CounterProvider>
   );
 }
