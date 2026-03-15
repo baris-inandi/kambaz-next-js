@@ -33,8 +33,7 @@ export default function CourseShell({ cid, children }: Props) {
       ),
     [cid, currentUser?._id, enrollments],
   );
-  const hasAccess =
-    !!course && !!currentUser && (currentUser.role === "FACULTY" || isEnrolled);
+  const hasAccess = !!course && !!currentUser && isEnrolled;
   const courseLabel = course ? `${course.number} ${course.name}` : cid;
   const showBreadcrumbs =
     pathname.startsWith(`/courses/${cid}/home`) ||
@@ -47,7 +46,7 @@ export default function CourseShell({ cid, children }: Props) {
       return;
     }
 
-    if (!course || (currentUser.role !== "FACULTY" && !isEnrolled)) {
+    if (!course || !isEnrolled) {
       router.replace("/dashboard");
     }
   }, [course, currentUser, isEnrolled, router]);

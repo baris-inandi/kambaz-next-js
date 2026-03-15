@@ -16,9 +16,13 @@ import {
 } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import { Course } from "../database";
-import { useAppDispatch, useAppSelector } from "../hooks";
 import { addNewCourse, deleteCourse, updateCourse } from "../courses/reducer";
-import { enroll, unenroll } from "../enrollments/reducer";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import {
+  dropEnrollmentsForCourse,
+  enroll,
+  unenroll,
+} from "../enrollments/reducer";
 
 const emptyCourse: Course = {
   _id: "",
@@ -56,15 +60,13 @@ export default function Dashboard() {
     [currentUser?._id, enrollments],
   );
 
-  const displayedCourses = useMemo(() => {
-    if (showAllCourses || isFaculty) {
-      return showAllCourses
+  const displayedCourses = useMemo(
+    () =>
+      showAllCourses
         ? courses
-        : courses.filter((item) => enrolledCourseIds.has(item._id));
-    }
-
-    return courses.filter((item) => enrolledCourseIds.has(item._id));
-  }, [courses, enrolledCourseIds, isFaculty, showAllCourses]);
+        : courses.filter((item) => enrolledCourseIds.has(item._id)),
+    [courses, enrolledCourseIds, showAllCourses],
+  );
 
   if (!currentUser) {
     return null;
@@ -87,6 +89,15 @@ export default function Dashboard() {
       image: course.image || "/images/reactjs.jpg",
     };
     dispatch(addNewCourse(newCourse));
+    if (isFaculty) {
+      dispatch(
+        enroll({
+          _id: uuidv4(),
+          user: currentUser._id,
+          course: newCourse._id,
+        }),
+      );
+    }
     resetForm();
   };
 
@@ -110,6 +121,7 @@ export default function Dashboard() {
 
   const handleDeleteCourse = (courseId: string) => {
     dispatch(deleteCourse(courseId));
+    dispatch(dropEnrollmentsForCourse(courseId));
     if (course._id === courseId) {
       resetForm();
     }
@@ -278,9 +290,7 @@ export default function Dashboard() {
                       {showAllCourses && (
                         <Button
                           variant={isEnrolled ? "danger" : "success"}
-                          onClick={() =>
-                            handleToggleEnrollment(listedCourse._id)
-                          }
+                          onClick={() => handleToggleEnrollment(listedCourse._id)}
                         >
                           {isEnrolled ? "Unenroll" : "Enroll"}
                         </Button>

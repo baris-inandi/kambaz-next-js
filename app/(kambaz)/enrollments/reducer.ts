@@ -35,8 +35,14 @@ const enrollmentsSlice = createSlice({
           ),
       );
     },
+    dropEnrollmentsForCourse: (state, action: PayloadAction<string>) => {
+      state.enrollments = state.enrollments.filter(
+        (enrollment) => enrollment.course !== action.payload,
+      );
+    },
   },
 });
 
-export const { enroll, unenroll } = enrollmentsSlice.actions;
+export const { enroll, unenroll, dropEnrollmentsForCourse } =
+  enrollmentsSlice.actions;
 export default enrollmentsSlice.reducer;
