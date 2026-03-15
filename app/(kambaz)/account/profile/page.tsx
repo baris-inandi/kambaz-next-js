@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, FormControl, FormSelect } from "react-bootstrap";
 import { User } from "../../database";
@@ -23,11 +23,9 @@ export default function Profile() {
     return null;
   }
 
-  const updateField =
-    (key: keyof User) =>
-    (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      setProfile({ ...profile, [key]: event.target.value } as User);
-    };
+  const setProfileField = (key: keyof User, value: string) => {
+    setProfile({ ...profile, [key]: value } as User);
+  };
 
   const signout = () => {
     dispatch(setCurrentUser(null));
@@ -42,7 +40,9 @@ export default function Profile() {
         placeholder="username"
         className="mb-2"
         id="wd-username"
-        onChange={updateField("username")}
+        onChange={(event) =>
+          setProfileField("username", event.currentTarget.value)
+        }
       />
       <FormControl
         value={profile.password}
@@ -50,41 +50,49 @@ export default function Profile() {
         type="password"
         className="mb-2"
         id="wd-password"
-        onChange={updateField("password")}
+        onChange={(event) =>
+          setProfileField("password", event.currentTarget.value)
+        }
       />
       <FormControl
         value={profile.firstName}
         placeholder="First Name"
         className="mb-2"
         id="wd-firstname"
-        onChange={updateField("firstName")}
+        onChange={(event) =>
+          setProfileField("firstName", event.currentTarget.value)
+        }
       />
       <FormControl
         value={profile.lastName}
         placeholder="Last Name"
         className="mb-2"
         id="wd-lastname"
-        onChange={updateField("lastName")}
+        onChange={(event) =>
+          setProfileField("lastName", event.currentTarget.value)
+        }
       />
       <FormControl
         value={profile.dob}
         type="date"
         className="mb-2"
         id="wd-dob"
-        onChange={updateField("dob")}
+        onChange={(event) => setProfileField("dob", event.currentTarget.value)}
       />
       <FormControl
         value={profile.email}
         type="email"
         className="mb-2"
         id="wd-email"
-        onChange={updateField("email")}
+        onChange={(event) =>
+          setProfileField("email", event.currentTarget.value)
+        }
       />
       <FormSelect
         value={profile.role}
         className="mb-2"
         id="wd-role"
-        onChange={updateField("role")}
+        onChange={(event) => setProfileField("role", event.currentTarget.value)}
       >
         <option value="FACULTY">Faculty</option>
         <option value="STUDENT">Student</option>

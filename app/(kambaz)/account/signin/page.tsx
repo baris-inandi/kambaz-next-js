@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { Button, FormControl } from "react-bootstrap";
 import { users } from "../../database";
 import { useAppDispatch } from "../../hooks";
@@ -16,11 +16,9 @@ export default function Signin() {
     password: "",
   });
 
-  const updateCredentials =
-    (key: "username" | "password") =>
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setCredentials({ ...credentials, [key]: event.target.value });
-    };
+  const setCredential = (key: "username" | "password", value: string) => {
+    setCredentials({ ...credentials, [key]: value });
+  };
 
   const signin = () => {
     const user = users.find(
@@ -45,7 +43,9 @@ export default function Signin() {
         placeholder="username"
         className="mb-2"
         value={credentials.username}
-        onChange={updateCredentials("username")}
+        onChange={(event) =>
+          setCredential("username", event.currentTarget.value)
+        }
       />
       <FormControl
         id="wd-password"
@@ -53,7 +53,9 @@ export default function Signin() {
         type="password"
         className="mb-2"
         value={credentials.password}
-        onChange={updateCredentials("password")}
+        onChange={(event) =>
+          setCredential("password", event.currentTarget.value)
+        }
       />
       <Button id="wd-signin-btn" className="w-100 mb-2" onClick={signin}>
         Sign in

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Button,
   Card,
@@ -17,12 +17,12 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { Course } from "../database";
 import { addNewCourse, deleteCourse, updateCourse } from "../courses/reducer";
-import { useAppDispatch, useAppSelector } from "../hooks";
 import {
   dropEnrollmentsForCourse,
   enroll,
   unenroll,
 } from "../enrollments/reducer";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const emptyCourse: Course = {
   _id: "",
@@ -72,10 +72,9 @@ export default function Dashboard() {
     return null;
   }
 
-  const updateField =
-    (key: keyof Course) => (event: ChangeEvent<HTMLInputElement>) => {
-      setCourse({ ...course, [key]: event.target.value });
-    };
+  const setCourseField = (key: keyof Course, value: string) => {
+    setCourse({ ...course, [key]: value });
+  };
 
   const resetForm = () => setCourse(emptyCourse);
 
@@ -152,42 +151,54 @@ export default function Dashboard() {
           <h2 className="fs-4">Course Editor</h2>
           <FormControl
             value={course.name}
-            onChange={updateField("name")}
+            onChange={(event) =>
+              setCourseField("name", event.currentTarget.value)
+            }
             className="mb-2"
             placeholder="Course Name"
             id="wd-course-name"
           />
           <FormControl
             value={course.description}
-            onChange={updateField("description")}
+            onChange={(event) =>
+              setCourseField("description", event.currentTarget.value)
+            }
             className="mb-2"
             placeholder="Course Description"
             id="wd-course-description"
           />
           <FormControl
             value={course.number}
-            onChange={updateField("number")}
+            onChange={(event) =>
+              setCourseField("number", event.currentTarget.value)
+            }
             className="mb-2"
             placeholder="Course Number"
             id="wd-course-number"
           />
           <FormControl
             value={course.startDate}
-            onChange={updateField("startDate")}
+            onChange={(event) =>
+              setCourseField("startDate", event.currentTarget.value)
+            }
             className="mb-2"
             type="date"
             id="wd-course-start-date"
           />
           <FormControl
             value={course.endDate}
-            onChange={updateField("endDate")}
+            onChange={(event) =>
+              setCourseField("endDate", event.currentTarget.value)
+            }
             className="mb-2"
             type="date"
             id="wd-course-end-date"
           />
           <FormControl
             value={course.image}
-            onChange={updateField("image")}
+            onChange={(event) =>
+              setCourseField("image", event.currentTarget.value)
+            }
             className="mb-2"
             placeholder="Course Image URL"
             id="wd-course-image"
@@ -290,7 +301,9 @@ export default function Dashboard() {
                       {showAllCourses && (
                         <Button
                           variant={isEnrolled ? "danger" : "success"}
-                          onClick={() => handleToggleEnrollment(listedCourse._id)}
+                          onClick={() =>
+                            handleToggleEnrollment(listedCourse._id)
+                          }
                         >
                           {isEnrolled ? "Unenroll" : "Enroll"}
                         </Button>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -14,8 +14,8 @@ import {
 } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import { Assignment } from "../../../database";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { addAssignment, updateAssignment } from "../../../assignments/reducer";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 
 interface Props {
   cid: string;
@@ -60,17 +60,12 @@ export default function AssignmentEditorForm({
     return null;
   }
 
-  const updateField =
-    (key: keyof Assignment) =>
-    (
-      event: ChangeEvent<
-        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      >,
-    ) => {
-      const value =
-        key === "points" ? Number(event.target.value || 0) : event.target.value;
-      setAssignment({ ...assignment, [key]: value } as Assignment);
-    };
+  const setAssignmentField = (
+    key: keyof Assignment,
+    value: string | number,
+  ) => {
+    setAssignment({ ...assignment, [key]: value } as Assignment);
+  };
 
   const save = () => {
     if (isNew) {
@@ -88,7 +83,9 @@ export default function AssignmentEditorForm({
         <FormControl
           id="wd-name"
           value={assignment.title}
-          onChange={updateField("title")}
+          onChange={(event) =>
+            setAssignmentField("title", event.currentTarget.value)
+          }
           className="mb-2"
         />
 
@@ -98,7 +95,9 @@ export default function AssignmentEditorForm({
           rows={4}
           className="mb-3"
           value={assignment.description}
-          onChange={updateField("description")}
+          onChange={(event) =>
+            setAssignmentField("description", event.currentTarget.value)
+          }
         />
 
         <Row className="mb-3">
@@ -110,7 +109,12 @@ export default function AssignmentEditorForm({
               type="number"
               id="wd-points"
               value={assignment.points}
-              onChange={updateField("points")}
+              onChange={(event) =>
+                setAssignmentField(
+                  "points",
+                  Number(event.currentTarget.value || 0),
+                )
+              }
             />
           </Col>
         </Row>
@@ -125,7 +129,9 @@ export default function AssignmentEditorForm({
             <FormSelect
               id="wd-assignment-group"
               value={assignment.assignmentGroup}
-              onChange={updateField("assignmentGroup")}
+              onChange={(event) =>
+                setAssignmentField("assignmentGroup", event.currentTarget.value)
+              }
             >
               <option value="ASSIGNMENTS">ASSIGNMENTS</option>
               <option value="QUIZZES">QUIZZES</option>
@@ -145,7 +151,9 @@ export default function AssignmentEditorForm({
             <FormSelect
               id="wd-display-grade-as"
               value={assignment.displayGradeAs}
-              onChange={updateField("displayGradeAs")}
+              onChange={(event) =>
+                setAssignmentField("displayGradeAs", event.currentTarget.value)
+              }
             >
               <option value="Percentage">Percentage</option>
               <option value="Points">Points</option>
@@ -162,7 +170,9 @@ export default function AssignmentEditorForm({
             <FormSelect
               id="wd-submission-type"
               value={assignment.submissionType}
-              onChange={updateField("submissionType")}
+              onChange={(event) =>
+                setAssignmentField("submissionType", event.currentTarget.value)
+              }
             >
               <option value="Online">Online</option>
               <option value="Text Entry">Text Entry</option>
@@ -180,7 +190,9 @@ export default function AssignmentEditorForm({
             <FormControl
               value={assignment.assignTo}
               id="wd-assign-to"
-              onChange={updateField("assignTo")}
+              onChange={(event) =>
+                setAssignmentField("assignTo", event.currentTarget.value)
+              }
             />
           </Col>
         </Row>
@@ -194,7 +206,9 @@ export default function AssignmentEditorForm({
               type="date"
               id="wd-due-date"
               value={assignment.dueDate}
-              onChange={updateField("dueDate")}
+              onChange={(event) =>
+                setAssignmentField("dueDate", event.currentTarget.value)
+              }
             />
           </Col>
         </Row>
@@ -208,7 +222,9 @@ export default function AssignmentEditorForm({
               type="date"
               id="wd-available-from"
               value={assignment.availableFrom}
-              onChange={updateField("availableFrom")}
+              onChange={(event) =>
+                setAssignmentField("availableFrom", event.currentTarget.value)
+              }
             />
           </Col>
         </Row>
@@ -222,7 +238,9 @@ export default function AssignmentEditorForm({
               type="date"
               id="wd-available-until"
               value={assignment.availableUntil}
-              onChange={updateField("availableUntil")}
+              onChange={(event) =>
+                setAssignmentField("availableUntil", event.currentTarget.value)
+              }
             />
           </Col>
         </Row>
