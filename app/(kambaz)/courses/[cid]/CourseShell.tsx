@@ -1,10 +1,10 @@
 "use client";
 
-import { ReactNode, useState } from "react";
-import { usePathname } from "next/navigation";
+import { ReactNode, useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { FaAlignJustify, FaXmark } from "react-icons/fa6";
 import KambazNavigation from "../../Navigation";
-import * as db from "../../database";
+import { useAppSelector } from "../../hooks";
 import CourseBreadcrumbs from "./Breadcrumbs";
 import CourseNavigation from "./Navigation";
 
@@ -15,29 +15,61 @@ interface Props {
 
 export default function CourseShell({ cid, children }: Props) {
   const pathname = usePathname();
+  const router = useRouter();
   const [showKambazNavigation, setShowKambazNavigation] = useState(false);
-  const [showCourseNavigation, setShowCourseNavigation] = useState(false);
-  const course = db.courses.find((c) => c._id === cid);
+  const [showMobileCourseNavigation, setShowMobileCourseNavigation] =
+    useState(false);
+  const [showDesktopCourseNavigation, setShowDesktopCourseNavigation] =
+    useState(true);
+  const { courses } = useAppSelector((state) => state.coursesReducer);
+  const { enrollments } = useAppSelector((state) => state.enrollmentsReducer);
+  const { currentUser } = useAppSelector((state) => state.accountReducer);
+  const course = courses.find((item) => item._id === cid);
+  const isEnrolled = useMemo(
+    () =>
+      enrollments.some(
+        (enrollment) =>
+          enrollment.user === currentUser?._id && enrollment.course === cid,
+      ),
+    [cid, currentUser?._id, enrollments],
+  );
+  const hasAccess =
+    !!course && !!currentUser && (currentUser.role === "FACULTY" || isEnrolled);
   const courseLabel = course ? `${course.number} ${course.name}` : cid;
   const showBreadcrumbs =
     pathname.startsWith(`/courses/${cid}/home`) ||
     pathname.startsWith(`/courses/${cid}/modules`) ||
     pathname.startsWith(`/courses/${cid}/assignments`);
 
+  useEffect(() => {
+    if (!currentUser) {
+      router.replace("/account/signin");
+      return;
+    }
+
+    if (!course || (currentUser.role !== "FACULTY" && !isEnrolled)) {
+      router.replace("/dashboard");
+    }
+  }, [course, currentUser, isEnrolled, router]);
+
   const closeMenus = () => {
     setShowKambazNavigation(false);
-    setShowCourseNavigation(false);
+    setShowMobileCourseNavigation(false);
   };
 
   const openKambazMenu = () => {
-    setShowCourseNavigation(false);
+    setShowMobileCourseNavigation(false);
     setShowKambazNavigation(true);
   };
 
   const openCourseMenu = () => {
     setShowKambazNavigation(false);
-    setShowCourseNavigation(true);
+    setShowMobileCourseNavigation(true);
   };
+
+  if (!hasAccess) {
+    return null;
+  }
 
   return (
     <div id="wd-courses">
@@ -61,16 +93,24 @@ export default function CourseShell({ cid, children }: Props) {
         </button>
       </div>
 
-      <h2 className="text-danger d-none d-md-block">
-        <FaAlignJustify className="me-4 fs-4 mb-1" />
+      <h2 className="text-danger d-none d-md-flex align-items-center">
+        <button
+          className="btn btn-link text-danger p-0 me-4"
+          onClick={() => setShowDesktopCourseNavigation((current) => !current)}
+          aria-label="Toggle Course Navigation"
+        >
+          <FaAlignJustify className="fs-4 mb-1" />
+        </button>
         {courseLabel}
       </h2>
       <hr />
 
       <div className="d-flex">
-        <div className="d-none d-md-block">
-          <CourseNavigation cid={cid} />
-        </div>
+        {showDesktopCourseNavigation && (
+          <div className="d-none d-md-block">
+            <CourseNavigation cid={cid} />
+          </div>
+        )}
         <div className="flex-fill">
           {showBreadcrumbs && <CourseBreadcrumbs cid={cid} />}
           {children}
@@ -107,7 +147,7 @@ export default function CourseShell({ cid, children }: Props) {
         </>
       )}
 
-      {showCourseNavigation && (
+      {showMobileCourseNavigation && (
         <>
           <button
             className="btn position-fixed top-0 bottom-0 start-0 end-0 bg-dark bg-opacity-50 border-0 rounded-0 d-md-none"

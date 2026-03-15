@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { Breadcrumb } from "react-bootstrap";
-import * as db from "../../database";
+import { useAppSelector } from "../../hooks";
 
 interface Props {
   cid: string;
@@ -10,7 +10,9 @@ interface Props {
 
 export default function CourseBreadcrumbs({ cid }: Props) {
   const pathname = usePathname();
-  const course = db.courses.find((c) => c._id === cid);
+  const { courses } = useAppSelector((state) => state.coursesReducer);
+  const { assignments } = useAppSelector((state) => state.assignmentsReducer);
+  const course = courses.find((item) => item._id === cid);
 
   const segments = pathname.split("/").filter(Boolean);
   const section = segments[2] || "home";
@@ -22,16 +24,17 @@ export default function CourseBreadcrumbs({ cid }: Props) {
     assignments: "Assignments",
   };
 
-  const sectionLabel = sectionLabelMap[section] || "Home";
   const assignment = aid
-    ? db.assignments.find((item) => item._id === aid && item.course === cid)
+    ? assignments.find((item) => item._id === aid && item.course === cid)
     : undefined;
 
   return (
     <Breadcrumb id="wd-course-breadcrumbs" className="mb-3">
       <Breadcrumb.Item active>Courses</Breadcrumb.Item>
       <Breadcrumb.Item active>{course?.name || cid}</Breadcrumb.Item>
-      <Breadcrumb.Item active>{sectionLabel}</Breadcrumb.Item>
+      <Breadcrumb.Item active>
+        {sectionLabelMap[section] || "Home"}
+      </Breadcrumb.Item>
       {assignment && (
         <Breadcrumb.Item active>{assignment.title}</Breadcrumb.Item>
       )}

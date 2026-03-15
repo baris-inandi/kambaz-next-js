@@ -4,6 +4,8 @@ import enrollmentsData from "./enrollments.json";
 import modulesData from "./modules.json";
 import usersData from "./users.json";
 
+export type UserRole = "FACULTY" | "STUDENT" | "TA";
+
 export interface Course {
   _id: string;
   number: string;
@@ -24,6 +26,7 @@ export interface Module {
   course: string;
   name: string;
   lessons: Lesson[];
+  editing?: boolean;
 }
 
 export interface Assignment {
@@ -46,8 +49,12 @@ export interface User {
   firstName: string;
   lastName: string;
   loginId: string;
+  username: string;
+  password: string;
+  email: string;
+  dob: string;
   section: string;
-  role: string;
+  role: UserRole;
   lastActivity: string;
   totalActivity: string;
 }

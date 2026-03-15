@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import KambazNavigation from "./Navigation";
+import StoreProvider from "./StoreProvider";
 import "./styles.css";
 
 interface Props {
@@ -8,15 +9,17 @@ interface Props {
 
 export default function KambazLayout(props: Props) {
   return (
-    <div id="wd-kambaz">
-      <div className="d-flex">
-        <div>
-          <KambazNavigation />
-        </div>
-        <div className="wd-main-content-offset p-3 flex-fill">
-          {props.children}
+    <StoreProvider>
+      <div id="wd-kambaz">
+        <div className="d-flex">
+          <div>
+            <KambazNavigation />
+          </div>
+          <div className="wd-main-content-offset p-3 flex-fill">
+            {props.children}
+          </div>
         </div>
       </div>
-    </div>
+    </StoreProvider>
   );
 }

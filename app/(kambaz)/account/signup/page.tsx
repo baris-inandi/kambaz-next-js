@@ -20,7 +20,7 @@ export default function Signup() {
       />
       <Link
         id="wd-signup-btn"
-        href="/account/profile"
+        href="/account/signin"
         className="btn btn-primary w-100 mb-2"
       >
         Sign up

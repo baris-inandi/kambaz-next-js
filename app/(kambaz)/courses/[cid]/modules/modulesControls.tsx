@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Button,
   Dropdown,
@@ -8,7 +10,16 @@ import {
 import { FaPlus } from "react-icons/fa6";
 import GreenCheckmark from "./GreenCheckmark";
 
-export default function ModulesControls() {
+interface Props {
+  isFaculty: boolean;
+  onAddModule: () => void;
+}
+
+export default function ModulesControls({ isFaculty, onAddModule }: Props) {
+  if (!isFaculty) {
+    return null;
+  }
+
   return (
     <div id="wd-modules-controls" className="text-nowrap">
       <Button
@@ -16,6 +27,7 @@ export default function ModulesControls() {
         size="lg"
         className="me-1 float-end"
         id="wd-add-module-btn"
+        onClick={onAddModule}
       >
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Module
