@@ -69,7 +69,7 @@ export default function Modules() {
   };
 
   const handleModuleNameKeyDown = (
-    event: KeyboardEvent<HTMLInputElement>,
+    event: KeyboardEvent<HTMLElement>,
     module: Module,
   ) => {
     if (event.key === "Enter") {
