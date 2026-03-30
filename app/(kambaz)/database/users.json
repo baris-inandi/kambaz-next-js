@@ -14,6 +14,20 @@
     "totalActivity": "12:32:21"
   },
   {
+    "_id": "124",
+    "firstName": "Nick",
+    "lastName": "Fury",
+    "loginId": "001234560A",
+    "username": "fury",
+    "password": "123",
+    "email": "fury@shield.gov",
+    "dob": "1960-07-04",
+    "section": "A100",
+    "role": "ADMIN",
+    "lastActivity": "2024-01-20",
+    "totalActivity": "14:45:10"
+  },
+  {
     "_id": "234",
     "firstName": "Tony",
     "lastName": "Stark",

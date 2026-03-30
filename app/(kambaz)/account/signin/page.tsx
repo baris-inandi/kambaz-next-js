@@ -11,6 +11,11 @@ import { setCurrentUser } from "../reducer";
 export default function Signin() {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const sampleUsers = [
+    { role: "Faculty", username: "jose", password: "123" },
+    { role: "Admin", username: "fury", password: "123" },
+    { role: "Student", username: "tony", password: "123" },
+  ];
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -60,6 +65,14 @@ export default function Signin() {
       <Button id="wd-signin-btn" className="w-100 mb-2" onClick={signin}>
         Sign in
       </Button>
+      <div className="border rounded p-3 bg-light mb-2">
+        <div className="fw-bold mb-2">Sample test accounts</div>
+        {sampleUsers.map((user) => (
+          <div key={user.role} className="small">
+            {user.role}: {user.username} / {user.password}
+          </div>
+        ))}
+      </div>
       <br />
       <Link id="wd-signup-link" href="/account/signup">
         Sign up

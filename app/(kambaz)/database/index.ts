@@ -4,7 +4,7 @@ import enrollmentsData from "./enrollments.json";
 import modulesData from "./modules.json";
 import usersData from "./users.json";
 
-export type UserRole = "FACULTY" | "STUDENT" | "TA";
+export type UserRole = "ADMIN" | "FACULTY" | "STUDENT" | "TA";
 
 export interface Course {
   _id: string;

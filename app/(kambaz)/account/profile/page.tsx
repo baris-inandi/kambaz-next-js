@@ -94,6 +94,7 @@ export default function Profile() {
         id="wd-role"
         onChange={(event) => setProfileField("role", event.currentTarget.value)}
       >
+        <option value="ADMIN">Admin</option>
         <option value="FACULTY">Faculty</option>
         <option value="STUDENT">Student</option>
         <option value="TA">TA</option>
