@@ -81,7 +81,27 @@ export default function TOC() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          My GitHub
+          Client GitHub
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink
+          href="https://github.com/baris-inandi/kambaz-node-server-app"
+          id="wd-server-github-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Server GitHub
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink
+          href="https://kambaz-node-server-app-e1jh.onrender.com"
+          id="wd-server-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Deployed Server
         </NavLink>
       </NavItem>
     </Nav>

@@ -20,7 +20,27 @@ export default function Labs() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  GitHub Repository
+                  Client GitHub Repository
+                </Link>
+              </p>
+              <p>
+                <Link
+                  href="https://github.com/baris-inandi/kambaz-node-server-app"
+                  id="wd-server-github"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Server GitHub Repository
+                </Link>
+              </p>
+              <p>
+                <Link
+                  href="https://kambaz-node-server-app-e1jh.onrender.com"
+                  id="wd-server-root"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Deployed Server Root
                 </Link>
               </p>
               <ul>

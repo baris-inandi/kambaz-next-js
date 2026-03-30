@@ -37,17 +37,19 @@ export const fetchAssignmentTitle = async () => {
 };
 
 export const updateTitle = async (title: string) => {
-  const response = await axios.get(`${ASSIGNMENT_API}/title/${encodeURIComponent(title)}`);
+  const response = await axios.put(`${ASSIGNMENT_API}/title`, { title });
   return response.data;
 };
 
 export const updateScore = async (score: number) => {
-  const response = await axios.get(`${ASSIGNMENT_API}/score/${score}`);
+  const response = await axios.put(`${ASSIGNMENT_API}/score`, { score });
   return response.data;
 };
 
 export const updateCompleted = async (completed: boolean) => {
-  const response = await axios.get(`${ASSIGNMENT_API}/completed/${completed}`);
+  const response = await axios.put(`${ASSIGNMENT_API}/completed`, {
+    completed,
+  });
   return response.data;
 };
 
