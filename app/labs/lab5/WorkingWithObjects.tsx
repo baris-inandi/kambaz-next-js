@@ -29,6 +29,20 @@ export default function WorkingWithObjects() {
       >
         Get Title
       </a>
+      <a
+        id="wd-retrieve-module"
+        className="btn btn-success me-2 mb-2"
+        href={`${HTTP_SERVER}/lab5/module`}
+      >
+        Get Module
+      </a>
+      <a
+        id="wd-retrieve-module-name"
+        className="btn btn-outline-success mb-2"
+        href={`${HTTP_SERVER}/lab5/module/name`}
+      >
+        Get Module Name
+      </a>
       <hr />
 
       <h4>Updating Object Properties</h4>

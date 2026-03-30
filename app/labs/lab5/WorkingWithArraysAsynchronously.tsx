@@ -44,7 +44,9 @@ export default function WorkingWithArraysAsynchronously() {
   const editTodo = (todo: Todo) => {
     setTodos(
       todos.map((t) =>
-        t.id === todo.id ? { ...todo, editing: true } : { ...t, editing: false },
+        t.id === todo.id
+          ? { ...todo, editing: true }
+          : { ...t, editing: false },
       ),
     );
   };
@@ -52,9 +54,7 @@ export default function WorkingWithArraysAsynchronously() {
   const updateTodo = async (todo: Todo) => {
     await client.updateTodo(todo);
     setTodos(
-      todos.map((t) =>
-        t.id === todo.id ? { ...todo, editing: false } : t,
-      ),
+      todos.map((t) => (t.id === todo.id ? { ...todo, editing: false } : t)),
     );
   };
 

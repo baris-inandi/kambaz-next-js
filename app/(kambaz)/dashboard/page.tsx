@@ -143,7 +143,9 @@ export default function Dashboard() {
   const handleDeleteCourse = async (courseId: string) => {
     await client.deleteCourse(courseId);
     dispatch(
-      setCourses(courses.filter((listedCourse) => listedCourse._id !== courseId)),
+      setCourses(
+        courses.filter((listedCourse) => listedCourse._id !== courseId),
+      ),
     );
     setAllCourses((current) =>
       current.filter((listedCourse) => listedCourse._id !== courseId),
@@ -314,7 +316,9 @@ export default function Dashboard() {
                           </Button>
                           <Button
                             variant="danger"
-                            onClick={() => void handleDeleteCourse(listedCourse._id)}
+                            onClick={() =>
+                              void handleDeleteCourse(listedCourse._id)
+                            }
                           >
                             Delete
                           </Button>
@@ -323,7 +327,9 @@ export default function Dashboard() {
                       {showAllCourses && (
                         <Button
                           variant={isEnrolled ? "danger" : "success"}
-                          onClick={() => void handleToggleEnrollment(listedCourse._id)}
+                          onClick={() =>
+                            void handleToggleEnrollment(listedCourse._id)
+                          }
                         >
                           {isEnrolled ? "Unenroll" : "Enroll"}
                         </Button>

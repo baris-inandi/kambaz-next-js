@@ -16,7 +16,7 @@ export default function Signin() {
   const sampleUsers = [
     { role: "Faculty", username: "jose", password: "123" },
     { role: "Admin", username: "fury", password: "123" },
-    { role: "Student", username: "tony", password: "123" },
+    { role: "Student", username: "iron_man", password: "stark123" },
   ];
   const [credentials, setCredentials] = useState({
     username: "",

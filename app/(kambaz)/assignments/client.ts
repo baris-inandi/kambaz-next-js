@@ -18,14 +18,20 @@ export const createAssignmentForCourse = async (
   courseId: string,
   assignment: Record<string, unknown>,
 ) => {
-  const { data } = await axios.post(`${COURSES_API}/${courseId}/assignments`, assignment);
+  const { data } = await axios.post(
+    `${COURSES_API}/${courseId}/assignments`,
+    assignment,
+  );
   return data;
 };
 
 export const updateAssignment = async (
   assignment: { _id: string } & Record<string, unknown>,
 ) => {
-  const { data } = await axios.put(`${ASSIGNMENTS_API}/${assignment._id}`, assignment);
+  const { data } = await axios.put(
+    `${ASSIGNMENTS_API}/${assignment._id}`,
+    assignment,
+  );
   return data;
 };
 

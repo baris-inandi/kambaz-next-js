@@ -43,10 +43,13 @@ export default function WorkingWithObjectsAsynchronously() {
       <button className="btn btn-primary me-2 mb-2" onClick={fetchAssignment}>
         Fetch Assignment
       </button>
-      <button className="btn btn-outline-primary mb-2" onClick={async () => {
-        const title = await client.fetchAssignmentTitle();
-        setAssignment((current) => ({ ...current, title }));
-      }}>
+      <button
+        className="btn btn-outline-primary mb-2"
+        onClick={async () => {
+          const title = await client.fetchAssignmentTitle();
+          setAssignment((current) => ({ ...current, title }));
+        }}
+      >
         Fetch Title
       </button>
       <FormControl

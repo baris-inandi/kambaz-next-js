@@ -10,7 +10,10 @@ export const signin = async (credentials: {
   username: string;
   password: string;
 }) => {
-  const response = await axiosWithCredentials.post(`${USERS_API}/signin`, credentials);
+  const response = await axiosWithCredentials.post(
+    `${USERS_API}/signin`,
+    credentials,
+  );
   return response.data;
 };
 
@@ -30,6 +33,9 @@ export const signout = async () => {
 };
 
 export const updateUser = async (user: User) => {
-  const response = await axiosWithCredentials.put(`${USERS_API}/${user._id}`, user);
+  const response = await axiosWithCredentials.put(
+    `${USERS_API}/${user._id}`,
+    user,
+  );
   return response.data;
 };

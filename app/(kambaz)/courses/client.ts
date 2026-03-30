@@ -13,12 +13,17 @@ export const fetchAllCourses = async () => {
 };
 
 export const findMyCourses = async () => {
-  const { data } = await axiosWithCredentials.get(`${USERS_API}/current/courses`);
+  const { data } = await axiosWithCredentials.get(
+    `${USERS_API}/current/courses`,
+  );
   return data;
 };
 
 export const createCourse = async (course: Course) => {
-  const { data } = await axiosWithCredentials.post(`${USERS_API}/current/courses`, course);
+  const { data } = await axiosWithCredentials.post(
+    `${USERS_API}/current/courses`,
+    course,
+  );
   return data;
 };
 
@@ -33,7 +38,9 @@ export const deleteCourse = async (courseId: string) => {
 };
 
 export const enrollInCourse = async (courseId: string) => {
-  const { data } = await axiosWithCredentials.post(`${USERS_API}/current/courses/${courseId}`);
+  const { data } = await axiosWithCredentials.post(
+    `${USERS_API}/current/courses/${courseId}`,
+  );
   return data;
 };
 
@@ -53,7 +60,10 @@ export const createModuleForCourse = async (
   courseId: string,
   module: Omit<Module, "_id">,
 ) => {
-  const { data } = await axios.post(`${COURSES_API}/${courseId}/modules`, module);
+  const { data } = await axios.post(
+    `${COURSES_API}/${courseId}/modules`,
+    module,
+  );
   return data;
 };
 

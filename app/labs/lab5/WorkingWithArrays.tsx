@@ -51,7 +51,11 @@ export default function WorkingWithArrays() {
       <hr />
 
       <h4>Creating New Items in an Array</h4>
-      <a id="wd-create-todo-link" className="btn btn-success mb-2" href={`${API}/create`}>
+      <a
+        id="wd-create-todo-link"
+        className="btn btn-success mb-2"
+        href={`${API}/create`}
+      >
         Create Todo
       </a>
       <hr />

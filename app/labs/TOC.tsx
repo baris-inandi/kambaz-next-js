@@ -11,10 +11,14 @@ export default function TOC() {
     <Nav variant="pills" className="flex-column">
       <NavItem>
         <NavLink
-          href="/labs"
+          href="/labs/lab1"
           as={Link}
           id="wd-home-link"
-          className={`nav-link ${pathname === "/labs" ? "active" : ""}`}
+          className={`nav-link ${
+            pathname === "/labs" || pathname.startsWith("/labs/lab1")
+              ? "active"
+              : ""
+          }`}
         >
           Labs
         </NavLink>

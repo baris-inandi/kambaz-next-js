@@ -47,10 +47,10 @@ export default function Modules() {
     }
 
     const newModule = await client.createModuleForCourse(cid, {
-        course: cid,
-        name: trimmedName,
-        lessons: [],
-      });
+      course: cid,
+      name: trimmedName,
+      lessons: [],
+    });
     dispatch(addModule(newModule));
     setNewModuleName("");
     setShowModuleEditor(false);
@@ -128,21 +128,19 @@ export default function Modules() {
                 <FormControl
                   className="d-inline-block w-auto me-2"
                   value={moduleNames[module._id] ?? module.name}
-                  onChange={(event) =>
-                    {
-                      const nextName = event.target.value;
-                      setModuleNames((current) => ({
-                        ...current,
-                        [module._id]: nextName,
-                      }));
-                      dispatch(
-                        updateModuleAction({
-                          ...module,
-                          name: nextName,
-                        }),
-                      );
-                    }
-                  }
+                  onChange={(event) => {
+                    const nextName = event.target.value;
+                    setModuleNames((current) => ({
+                      ...current,
+                      [module._id]: nextName,
+                    }));
+                    dispatch(
+                      updateModuleAction({
+                        ...module,
+                        name: nextName,
+                      }),
+                    );
+                  }}
                   onKeyDown={(event) => handleModuleNameKeyDown(event, module)}
                   onBlur={() => void saveModule(module)}
                 />
@@ -153,7 +151,9 @@ export default function Modules() {
                 isFaculty={isFaculty}
                 moduleId={module._id}
                 onEditModule={() => startEditing(module)}
-                onDeleteModule={(moduleId) => void deleteExistingModule(moduleId)}
+                onDeleteModule={(moduleId) =>
+                  void deleteExistingModule(moduleId)
+                }
               />
             </div>
             <ListGroup className="wd-lessons rounded-0">
