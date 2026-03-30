@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useEffect } from "react";
 import { Button, FormControl, ListGroup, ListGroupItem } from "react-bootstrap";
 import { FaPlus, FaSearch, FaTrashAlt } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { deleteAssignment } from "../../../assignments/reducer";
+import { deleteAssignment, setAssignments } from "../../../assignments/reducer";
+import * as client from "../../../assignments/client";
 
 function formatDate(dateString: string) {
   return new Date(`${dateString}T00:00:00`).toLocaleDateString("en-US", {
@@ -20,13 +22,23 @@ export default function Assignments() {
   const dispatch = useAppDispatch();
   const { assignments } = useAppSelector((state) => state.assignmentsReducer);
   const { currentUser } = useAppSelector((state) => state.accountReducer);
-  const courseAssignments = assignments.filter(
-    (assignment) => assignment.course === cid,
-  );
   const isFaculty = currentUser?.role === "FACULTY";
 
-  const removeAssignment = (assignmentId: string) => {
+  useEffect(() => {
+    const fetchAssignments = async () => {
+      if (!cid) {
+        return;
+      }
+      const courseAssignments = await client.findAssignmentsForCourse(cid);
+      dispatch(setAssignments(courseAssignments));
+    };
+
+    fetchAssignments();
+  }, [cid, dispatch]);
+
+  const removeAssignment = async (assignmentId: string) => {
     if (window.confirm("Delete this assignment?")) {
+      await client.deleteAssignment(assignmentId);
       dispatch(deleteAssignment(assignmentId));
     }
   };
@@ -67,7 +79,7 @@ export default function Assignments() {
       </h3>
 
       <ListGroup id="wd-assignment-list" className="rounded-0">
-        {courseAssignments.map((assignment) => (
+        {assignments.map((assignment) => (
           <ListGroupItem
             key={assignment._id}
             className="wd-assignment-list-item"
@@ -97,7 +109,7 @@ export default function Assignments() {
                 {isFaculty && (
                   <button
                     className="btn btn-link text-danger p-0"
-                    onClick={() => removeAssignment(assignment._id)}
+                    onClick={() => void removeAssignment(assignment._id)}
                     aria-label="Delete Assignment"
                   >
                     <FaTrashAlt />

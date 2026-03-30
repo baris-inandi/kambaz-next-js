@@ -6,18 +6,25 @@ import { Button, FormControl, FormSelect } from "react-bootstrap";
 import { User } from "../../database";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { setCurrentUser } from "../reducer";
+import { setCourses } from "../../courses/reducer";
+import * as client from "../client";
 
 export default function Profile() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.accountReducer);
   const [profile, setProfile] = useState<User | null>(currentUser);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (!currentUser) {
       router.replace("/account/signin");
     }
   }, [currentUser, router]);
+
+  useEffect(() => {
+    setProfile(currentUser);
+  }, [currentUser]);
 
   if (!currentUser || !profile) {
     return null;
@@ -27,8 +34,19 @@ export default function Profile() {
     setProfile({ ...profile, [key]: value } as User);
   };
 
-  const signout = () => {
+  const updateProfile = async () => {
+    if (!profile) {
+      return;
+    }
+    const updatedUser = await client.updateUser(profile);
+    dispatch(setCurrentUser(updatedUser));
+    setMessage("Profile updated.");
+  };
+
+  const signout = async () => {
+    await client.signout();
     dispatch(setCurrentUser(null));
+    dispatch(setCourses([]));
     router.push("/account/signin");
   };
 
@@ -99,7 +117,13 @@ export default function Profile() {
         <option value="STUDENT">Student</option>
         <option value="TA">TA</option>
       </FormSelect>
-      <Button variant="danger" className="w-100 mb-2" type="button">
+      {message && <div className="text-success small mb-2">{message}</div>}
+      <Button
+        variant="danger"
+        className="w-100 mb-2"
+        type="button"
+        onClick={updateProfile}
+      >
         Update
       </Button>
       <Button variant="secondary" className="w-100" onClick={signout}>

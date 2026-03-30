@@ -1,18 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Course, courses as initialCourses } from "../database";
+import { Course } from "../database";
 
 interface CoursesState {
   courses: Course[];
 }
 
 const initialState: CoursesState = {
-  courses: initialCourses,
+  courses: [],
 };
 
 const coursesSlice = createSlice({
   name: "courses",
   initialState,
   reducers: {
+    setCourses: (state, action: PayloadAction<Course[]>) => {
+      state.courses = action.payload;
+    },
     addNewCourse: (state, action: PayloadAction<Course>) => {
       state.courses.push(action.payload);
     },
@@ -29,6 +32,6 @@ const coursesSlice = createSlice({
   },
 });
 
-export const { addNewCourse, deleteCourse, updateCourse } =
+export const { setCourses, addNewCourse, deleteCourse, updateCourse } =
   coursesSlice.actions;
 export default coursesSlice.reducer;

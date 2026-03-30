@@ -1,18 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Assignment, assignments as initialAssignments } from "../database";
+import { Assignment } from "../database";
 
 interface AssignmentsState {
   assignments: Assignment[];
 }
 
 const initialState: AssignmentsState = {
-  assignments: initialAssignments,
+  assignments: [],
 };
 
 const assignmentsSlice = createSlice({
   name: "assignments",
   initialState,
   reducers: {
+    setAssignments: (state, action: PayloadAction<Assignment[]>) => {
+      state.assignments = action.payload;
+    },
     addAssignment: (state, action: PayloadAction<Assignment>) => {
       state.assignments.push(action.payload);
     },
@@ -29,6 +32,6 @@ const assignmentsSlice = createSlice({
   },
 });
 
-export const { addAssignment, deleteAssignment, updateAssignment } =
+export const { setAssignments, addAssignment, deleteAssignment, updateAssignment } =
   assignmentsSlice.actions;
 export default assignmentsSlice.reducer;

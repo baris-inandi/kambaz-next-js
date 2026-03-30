@@ -1,22 +1,22 @@
 "use client";
 
-import { KeyboardEvent, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { FormControl, ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
-import { v4 as uuidv4 } from "uuid";
 import { Module } from "../../../database";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import {
   addModule,
-  deleteModule,
   editModule,
-  updateModule,
+  setModules,
+  updateModule as updateModuleAction,
 } from "../../../modules/reducer";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlButtons";
 import ModuleEditor from "./ModuleEditor";
 import ModulesControls from "./modulesControls";
+import * as client from "../../client";
 
 export default function Modules() {
   const { cid } = useParams<{ cid: string }>();
@@ -26,23 +26,32 @@ export default function Modules() {
   const [showModuleEditor, setShowModuleEditor] = useState(false);
   const [newModuleName, setNewModuleName] = useState("");
   const [moduleNames, setModuleNames] = useState<Record<string, string>>({});
-  const courseModules = modules.filter((module) => module.course === cid);
   const isFaculty = currentUser?.role === "FACULTY";
 
-  const saveNewModule = () => {
+  useEffect(() => {
+    const fetchModules = async () => {
+      if (!cid) {
+        return;
+      }
+      const nextModules = await client.findModulesForCourse(cid);
+      dispatch(setModules(nextModules));
+    };
+
+    fetchModules();
+  }, [cid, dispatch]);
+
+  const saveNewModule = async () => {
     const trimmedName = newModuleName.trim();
     if (!trimmedName) {
       return;
     }
 
-    dispatch(
-      addModule({
-        _id: uuidv4(),
+    const newModule = await client.createModuleForCourse(cid, {
         course: cid,
         name: trimmedName,
         lessons: [],
-      }),
-    );
+      });
+    dispatch(addModule(newModule));
     setNewModuleName("");
     setShowModuleEditor(false);
   };
@@ -52,19 +61,29 @@ export default function Modules() {
     dispatch(editModule(module._id));
   };
 
-  const saveModule = (module: Module) => {
+  const saveModule = async (module: Module) => {
     const nextName = (moduleNames[module._id] ?? module.name).trim();
+    const updatedModule = {
+      ...module,
+      name: nextName || module.name,
+      editing: false,
+    };
+    await client.updateModule(updatedModule);
     dispatch(
-      updateModule({
-        ...module,
-        name: nextName || module.name,
-      }),
+      setModules(
+        modules.map((listedModule) =>
+          listedModule._id === updatedModule._id
+            ? updatedModule
+            : { ...listedModule, editing: false },
+        ),
+      ),
     );
   };
 
-  const deleteExistingModule = (moduleId: string) => {
+  const deleteExistingModule = async (moduleId: string) => {
     if (window.confirm("Delete this module?")) {
-      dispatch(deleteModule(moduleId));
+      await client.deleteModule(moduleId);
+      dispatch(setModules(modules.filter((module) => module._id !== moduleId)));
     }
   };
 
@@ -98,7 +117,7 @@ export default function Modules() {
       <br />
       <br />
       <ListGroup className="rounded-0" id="wd-modules">
-        {courseModules.map((module) => (
+        {modules.map((module) => (
           <ListGroupItem
             key={module._id}
             className="wd-module p-0 mb-5 fs-5 border-gray"
@@ -110,13 +129,22 @@ export default function Modules() {
                   className="d-inline-block w-auto me-2"
                   value={moduleNames[module._id] ?? module.name}
                   onChange={(event) =>
-                    setModuleNames((current) => ({
-                      ...current,
-                      [module._id]: event.target.value,
-                    }))
+                    {
+                      const nextName = event.target.value;
+                      setModuleNames((current) => ({
+                        ...current,
+                        [module._id]: nextName,
+                      }));
+                      dispatch(
+                        updateModuleAction({
+                          ...module,
+                          name: nextName,
+                        }),
+                      );
+                    }
                   }
                   onKeyDown={(event) => handleModuleNameKeyDown(event, module)}
-                  onBlur={() => saveModule(module)}
+                  onBlur={() => void saveModule(module)}
                 />
               ) : (
                 <span>{module.name}</span>
@@ -125,7 +153,7 @@ export default function Modules() {
                 isFaculty={isFaculty}
                 moduleId={module._id}
                 onEditModule={() => startEditing(module)}
-                onDeleteModule={deleteExistingModule}
+                onDeleteModule={(moduleId) => void deleteExistingModule(moduleId)}
               />
             </div>
             <ListGroup className="wd-lessons rounded-0">

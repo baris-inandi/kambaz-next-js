@@ -44,6 +44,11 @@ export default function Labs() {
                     Lab 4: State Management
                   </Link>
                 </li>
+                <li>
+                  <Link href="/labs/lab5" id="wd-lab5-link">
+                    Lab 5: REST and Express
+                  </Link>
+                </li>
               </ul>
             </div>
           </td>

@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { FaAlignJustify, FaXmark } from "react-icons/fa6";
 import KambazNavigation from "../../Navigation";
@@ -22,18 +22,9 @@ export default function CourseShell({ cid, children }: Props) {
   const [showDesktopCourseNavigation, setShowDesktopCourseNavigation] =
     useState(true);
   const { courses } = useAppSelector((state) => state.coursesReducer);
-  const { enrollments } = useAppSelector((state) => state.enrollmentsReducer);
   const { currentUser } = useAppSelector((state) => state.accountReducer);
   const course = courses.find((item) => item._id === cid);
-  const isEnrolled = useMemo(
-    () =>
-      enrollments.some(
-        (enrollment) =>
-          enrollment.user === currentUser?._id && enrollment.course === cid,
-      ),
-    [cid, currentUser?._id, enrollments],
-  );
-  const hasAccess = !!course && !!currentUser && isEnrolled;
+  const hasAccess = !!course && !!currentUser;
   const courseLabel = course ? `${course.number} ${course.name}` : cid;
   const showBreadcrumbs =
     pathname.startsWith(`/courses/${cid}/home`) ||
@@ -46,10 +37,10 @@ export default function CourseShell({ cid, children }: Props) {
       return;
     }
 
-    if (!course || !isEnrolled) {
+    if (!course) {
       router.replace("/dashboard");
     }
-  }, [course, currentUser, isEnrolled, router]);
+  }, [course, currentUser, router]);
 
   const closeMenus = () => {
     setShowKambazNavigation(false);

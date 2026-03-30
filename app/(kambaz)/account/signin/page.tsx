@@ -4,9 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button, FormControl } from "react-bootstrap";
-import { users } from "../../database";
 import { useAppDispatch } from "../../hooks";
 import { setCurrentUser } from "../reducer";
+import { setCourses } from "../../courses/reducer";
+import * as client from "../client";
+import * as coursesClient from "../../courses/client";
 
 export default function Signin() {
   const router = useRouter();
@@ -20,24 +22,22 @@ export default function Signin() {
     username: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   const setCredential = (key: "username" | "password", value: string) => {
     setCredentials({ ...credentials, [key]: value });
   };
 
-  const signin = () => {
-    const user = users.find(
-      (candidate) =>
-        candidate.username === credentials.username &&
-        candidate.password === credentials.password,
-    );
-
-    if (!user) {
-      return;
+  const signin = async () => {
+    try {
+      const user = await client.signin(credentials);
+      dispatch(setCurrentUser(user));
+      const courses = await coursesClient.findMyCourses();
+      dispatch(setCourses(courses));
+      router.push("/dashboard");
+    } catch {
+      setError("Unable to sign in. Check your username and password.");
     }
-
-    dispatch(setCurrentUser(user));
-    router.push("/dashboard");
   };
 
   return (
@@ -65,6 +65,7 @@ export default function Signin() {
       <Button id="wd-signin-btn" className="w-100 mb-2" onClick={signin}>
         Sign in
       </Button>
+      {error && <div className="text-danger small mb-2">{error}</div>}
       <div className="border rounded p-3 bg-light mb-2">
         <div className="fw-bold mb-2">Sample test accounts</div>
         {sampleUsers.map((user) => (

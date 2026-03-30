@@ -12,10 +12,10 @@ import {
   FormSelect,
   Row,
 } from "react-bootstrap";
-import { v4 as uuidv4 } from "uuid";
 import { Assignment } from "../../../database";
 import { addAssignment, updateAssignment } from "../../../assignments/reducer";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
+import * as client from "../../../assignments/client";
 
 interface Props {
   cid: string;
@@ -24,7 +24,7 @@ interface Props {
 }
 
 const createEmptyAssignment = (cid: string): Assignment => ({
-  _id: uuidv4(),
+  _id: "new",
   course: cid,
   title: "",
   description: "",
@@ -67,11 +67,19 @@ export default function AssignmentEditorForm({
     setAssignment({ ...assignment, [key]: value } as Assignment);
   };
 
-  const save = () => {
+  const save = async () => {
     if (isNew) {
-      dispatch(addAssignment(assignment));
+      const createdAssignment = await client.createAssignmentForCourse(cid, {
+        ...assignment,
+        course: cid,
+      });
+      dispatch(addAssignment(createdAssignment));
     } else {
-      dispatch(updateAssignment(assignment));
+      const updatedAssignment = await client.updateAssignment({
+        ...assignment,
+        course: cid,
+      });
+      dispatch(updateAssignment(updatedAssignment));
     }
     router.push(`/courses/${cid}/assignments`);
   };
@@ -252,7 +260,7 @@ export default function AssignmentEditorForm({
           >
             Cancel
           </Link>
-          <Button variant="danger" onClick={save} type="button">
+          <Button variant="danger" onClick={() => void save()} type="button">
             Save
           </Button>
         </div>
