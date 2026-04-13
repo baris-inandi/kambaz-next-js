@@ -135,8 +135,9 @@ export default function Dashboard() {
     resetForm();
   };
 
-  const handleEditCourse = (selectedCourse: Course) => {
-    setCourse(selectedCourse);
+  const handleEditCourse = async (selectedCourse: Course) => {
+    const fullCourse = await client.findCourseById(selectedCourse._id);
+    setCourse(fullCourse);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -158,9 +159,9 @@ export default function Dashboard() {
   const handleToggleEnrollment = async (courseId: string) => {
     const isEnrolled = enrolledCourseIds.has(courseId);
     if (isEnrolled) {
-      await client.unenrollFromCourse(courseId);
+      await client.unenrollFromCourse(currentUser._id, courseId);
     } else {
-      await client.enrollInCourse(courseId);
+      await client.enrollInCourse(currentUser._id, courseId);
     }
     const myCourses = await client.findMyCourses();
     dispatch(setCourses(myCourses));
@@ -291,7 +292,9 @@ export default function Dashboard() {
                   </Link>
                   <CardBody>
                     <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
-                      {listedCourse.number} {listedCourse.name}
+                      {[listedCourse.number, listedCourse.name]
+                        .filter(Boolean)
+                        .join(" ")}
                     </CardTitle>
                     <CardText
                       className="wd-dashboard-course-description overflow-hidden"
@@ -310,7 +313,7 @@ export default function Dashboard() {
                         <>
                           <Button
                             variant="warning"
-                            onClick={() => handleEditCourse(listedCourse)}
+                            onClick={() => void handleEditCourse(listedCourse)}
                           >
                             Edit
                           </Button>

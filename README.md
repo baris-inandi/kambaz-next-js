@@ -8,8 +8,8 @@ Use these seeded accounts to verify the Kambaz login flow:
 - Admin: `fury` / `123`
 - Student: `tony` / `123`
 
-## A4 Submission
+## A6 Submission
 
-- Branch: `a4`
+- Branch: `a6`
 - Repository: `https://github.com/baris-inandi/kambaz-next-js`
-- Vercel Deployment URL: `ADD_A4_VERCEL_URL_HERE`
+- Vercel Deployment URL: `https://kambaz-next-js-git-a6-team-inandi.vercel.app/`

@@ -68,7 +68,7 @@ export default function Modules() {
       name: nextName || module.name,
       editing: false,
     };
-    await client.updateModule(updatedModule);
+    await client.updateModule(cid, updatedModule);
     dispatch(
       setModules(
         modules.map((listedModule) =>
@@ -82,7 +82,7 @@ export default function Modules() {
 
   const deleteExistingModule = async (moduleId: string) => {
     if (window.confirm("Delete this module?")) {
-      await client.deleteModule(moduleId);
+      await client.deleteModule(cid, moduleId);
       dispatch(setModules(modules.filter((module) => module._id !== moduleId)));
     }
   };

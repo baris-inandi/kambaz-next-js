@@ -8,7 +8,12 @@ export default function AccountNavigation() {
   const pathname = usePathname();
   const { currentUser } = useAppSelector((state) => state.accountReducer);
   const links = currentUser
-    ? [{ label: "Profile", href: "/account/profile" }]
+    ? [
+        { label: "Profile", href: "/account/profile" },
+        ...(currentUser.role === "ADMIN"
+          ? [{ label: "Users", href: "/account/users" }]
+          : []),
+      ]
     : [
         { label: "Signin", href: "/account/signin" },
         { label: "Signup", href: "/account/signup" },
@@ -20,7 +25,7 @@ export default function AccountNavigation() {
         <Link
           key={link.href}
           href={link.href}
-          className={`list-group-item border-0 ${pathname === link.href ? "active" : "text-danger"}`}
+          className={`list-group-item border-0 ${pathname.startsWith(link.href) ? "active" : "text-danger"}`}
         >
           {link.label}
         </Link>

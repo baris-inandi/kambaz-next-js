@@ -6,6 +6,7 @@ import { Nav, NavItem, NavLink } from "react-bootstrap";
 
 export default function TOC() {
   const pathname = usePathname();
+  const serverUrl = process.env.NEXT_PUBLIC_HTTP_SERVER;
 
   return (
     <Nav variant="pills" className="flex-column">
@@ -98,16 +99,18 @@ export default function TOC() {
           Server GitHub
         </NavLink>
       </NavItem>
-      <NavItem>
-        <NavLink
-          href="https://kambaz-node-server-app-e1jh.onrender.com"
-          id="wd-server-link"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Deployed Server
-        </NavLink>
-      </NavItem>
+      {serverUrl && (
+        <NavItem>
+          <NavLink
+            href={serverUrl}
+            id="wd-server-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Deployed Server
+          </NavLink>
+        </NavItem>
+      )}
     </Nav>
   );
 }
