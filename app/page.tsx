@@ -11,7 +11,7 @@ export default function Home() {
                 CS4550 Final Project
               </div>
               <h1 className="fw-bold mb-4" style={{ fontSize: "3rem" }}>
-                Kambaz Pazza
+                Kambaz Quizzes
               </h1>
               <div className="d-flex flex-wrap gap-3">
                 <Link

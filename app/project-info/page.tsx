@@ -30,7 +30,7 @@ export default function ProjectInfoPage() {
                   Project Information
                 </p>
                 <h1 className="fw-bold mb-0" style={{ fontSize: "2.75rem" }}>
-                  Kambaz Pazza
+                  Kambaz Quizzes
                 </h1>
               </div>
               <Link href="/" className="btn btn-outline-dark px-3 py-2">

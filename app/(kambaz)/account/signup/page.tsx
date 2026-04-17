@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button, FormControl } from "react-bootstrap";
+import { Button, FormControl, FormSelect } from "react-bootstrap";
+import { UserRole } from "../../database";
 import { useAppDispatch } from "../../hooks";
 import { setCurrentUser } from "../reducer";
 import { setCourses } from "../../courses/reducer";
@@ -16,6 +17,7 @@ export default function Signup() {
     username: "",
     password: "",
     verifyPassword: "",
+    role: "STUDENT" as UserRole,
   });
   const [error, setError] = useState("");
 
@@ -37,7 +39,7 @@ export default function Signup() {
         lastName: "User",
         email: `${form.username}@example.com`,
         dob: "2000-01-01",
-        role: "STUDENT",
+        role: form.role,
         loginId: form.username,
         section: "S101",
         lastActivity: new Date().toISOString().split("T")[0],
@@ -79,6 +81,14 @@ export default function Signup() {
           setField("verifyPassword", event.currentTarget.value)
         }
       />
+      <FormSelect
+        className="mb-2"
+        value={form.role}
+        onChange={(event) => setField("role", event.currentTarget.value)}
+      >
+        <option value="STUDENT">Student</option>
+        <option value="FACULTY">Faculty</option>
+      </FormSelect>
       {error && <div className="text-danger small mb-2">{error}</div>}
       <Button id="wd-signup-btn" className="w-100 mb-2" onClick={signup}>
         Sign up
