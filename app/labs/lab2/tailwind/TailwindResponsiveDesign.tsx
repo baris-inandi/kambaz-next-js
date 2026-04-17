@@ -1,12 +1,16 @@
+import Image from "next/image";
+
 export default function TailwindResponsiveDesign() {
   return (
     <div className="mx-auto max-w-md overflow-hidden rounded-xl bg-white shadow-md md:max-w-2xl">
       <div className="md:flex">
         <div className="md:shrink-0">
-          <img
+          <Image
             className="h-48 w-full object-cover md:h-full md:w-48"
             src="/images/reactjs.jpg"
             alt="ReactJS logo"
+            width={192}
+            height={192}
           />
         </div>
         <div className="p-8">

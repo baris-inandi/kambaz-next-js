@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Float() {
   return (
     <div id="wd-float-divs">
@@ -14,6 +16,19 @@ export default function Float() {
         </div>
         <div className="wd-float-done"></div>
       </div>
+      <h3>Floating image</h3>
+      <Image
+        src="/images/reactjs.jpg"
+        alt="Floating sample"
+        width={240}
+        height={160}
+        className="wd-float-right ms-2 mb-2"
+      />
+      <p>
+        This image is floated to the right. Content in this paragraph wraps on
+        the left side and below the image as the text flows naturally around it.
+      </p>
+      <div className="wd-float-done"></div>
     </div>
   );
 }

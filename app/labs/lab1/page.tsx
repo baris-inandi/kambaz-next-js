@@ -1,7 +1,76 @@
+import Image from "next/image";
+import Link from "next/link";
+
 export default function Lab1() {
   return (
     <div id="wd-lab1">
       <h2>Lab 1</h2>
+      <h3>Labs Landing Page</h3>
+      <p>Baris Inandioglu</p>
+      <p>Section: S101</p>
+      <p>
+        <Link href="/" id="wd-kambaz-home-link">
+          Kambaz Application
+        </Link>
+      </p>
+      <p>
+        <Link
+          href="https://github.com/baris-inandi/kambaz-next-js"
+          id="wd-client-github"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Client GitHub Repository
+        </Link>
+      </p>
+      <p>
+        <Link
+          href="https://github.com/baris-inandi/kambaz-node-server-app"
+          id="wd-server-github"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Server GitHub Repository
+        </Link>
+      </p>
+      <p>
+        <Link
+          href="https://kambaz-node-server-app-e1jh.onrender.com"
+          id="wd-server-root"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Deployed Server Root
+        </Link>
+      </p>
+      <ul>
+        <li>
+          <Link href="/labs/lab1" id="wd-lab1-link">
+            Lab 1
+          </Link>
+        </li>
+        <li>
+          <Link href="/labs/lab2" id="wd-lab2-link">
+            Lab 2
+          </Link>
+        </li>
+        <li>
+          <Link href="/labs/lab3" id="wd-lab3-link">
+            Lab 3
+          </Link>
+        </li>
+        <li>
+          <Link href="/labs/lab4" id="wd-lab4-link">
+            Lab 4
+          </Link>
+        </li>
+        <li>
+          <Link href="/labs/lab5" id="wd-lab5-link">
+            Lab 5
+          </Link>
+        </li>
+      </ul>
+      <hr />
       <h3>HTML Examples</h3>
       <div id="wd-h-tag">
         <h4>Heading Tags</h4>
@@ -163,15 +232,23 @@ export default function Lab1() {
       <div id="wd-images">
         <h4>Image tag</h4>
         Loading an image from the internet: <br />
-        <img
+        <Image
           id="wd-starship"
-          width="400px"
           src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
+          width={400}
+          height={250}
+          alt="Starship launch"
         />
         <br />
         Loading a local image:
         <br />
-        <img id="wd-teslabot" src="/images/teslabot.jpg" height="200px" />
+        <Image
+          id="wd-teslabot"
+          src="/images/teslabot.jpg"
+          width={300}
+          height={200}
+          alt="Tesla Bot"
+        />
       </div>
       <div id="wd-forms">
         <h4>Form Elements</h4>

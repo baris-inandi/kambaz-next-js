@@ -7,19 +7,11 @@ interface Props {
 
 export default function AccountLayout(props: Props) {
   return (
-    <div id="wd-kambaz">
-      <table>
-        <tbody>
-          <tr>
-            <td valign="top">
-              <AccountNavigation />
-            </td>
-            <td valign="top" width="100%">
-              {props.children}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div id="wd-account-screen" className="d-flex">
+      <div className="me-4">
+        <AccountNavigation />
+      </div>
+      <div className="flex-fill">{props.children}</div>
     </div>
   );
 }

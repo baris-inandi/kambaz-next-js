@@ -114,8 +114,9 @@ p#wd-id-selector-2 {
 }
 
 .wd-margin-right-left {
-  margin-left: 50px;
-  margin-right: 50px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .wd-margin-all-around {
@@ -299,8 +300,8 @@ p#wd-id-selector-2 {
 
 #wd-screen-size-label {
   position: fixed;
-  bottom: 0;
-  right: 0;
+  top: 0;
+  left: 0;
   background-color: black;
   color: white;
   padding: 5px;
