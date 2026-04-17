@@ -65,3 +65,64 @@ body * {
 .wd-assignment-link:hover {
   color: #dc3545;
 }
+
+.wd-pazza-page {
+  min-height: calc(100vh - 140px);
+  position: relative;
+}
+
+.wd-pazza-fixed-shell {
+  position: fixed;
+  z-index: 1000;
+  background: white;
+}
+
+.wd-pazza-nav {
+  background: #f8f9fa;
+  padding: 1rem 1.25rem;
+}
+
+.wd-pazza-logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: 0.08em;
+  color: #b42318;
+}
+
+.wd-pazza-tab {
+  color: #495057;
+  text-decoration: none;
+  font-weight: 600;
+  padding-bottom: 0.15rem;
+  border-bottom: 2px solid transparent;
+}
+
+.wd-pazza-tab.active {
+  color: black;
+  border-bottom-color: black;
+}
+
+.wd-pazza-folders {
+  background: #fff;
+  padding: 0.75rem 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  border-left: 1px solid var(--bs-border-color);
+  border-right: 1px solid var(--bs-border-color);
+  border-bottom: 1px solid var(--bs-border-color);
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.wd-pazza-editor .ql-container {
+  min-height: 180px;
+}
+
+.wd-pazza-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

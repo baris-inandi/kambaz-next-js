@@ -25,7 +25,9 @@ export default function CourseShell({ cid, children }: Props) {
   const { currentUser } = useAppSelector((state) => state.accountReducer);
   const course = courses.find((item) => item._id === cid);
   const hasAccess = !!course && !!currentUser;
-  const courseLabel = course ? `${course.number} ${course.name}` : cid;
+  const courseLabel = course
+    ? `${course.number ? `${course.number} ` : ""}${course.name}`
+    : cid;
   const showBreadcrumbs =
     pathname.startsWith(`/courses/${cid}/home`) ||
     pathname.startsWith(`/courses/${cid}/modules`) ||

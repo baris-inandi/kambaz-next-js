@@ -21,7 +21,7 @@ export default function CourseNavigation({
   const links = [
     { label: "Home", path: "home", id: "wd-course-home-link" },
     { label: "Modules", path: "modules", id: "wd-course-modules-link" },
-    { label: "Piazza", path: "piazza", id: "wd-course-piazza-link" },
+    { label: "Pazza", path: "pazza", id: "wd-course-piazza-link" },
     { label: "Zoom", path: "zoom", id: "wd-course-zoom-link" },
     {
       label: "Assignments",
