@@ -1,9 +1,5 @@
-import axios from "axios";
 import { User } from "../database";
-
-const axiosWithCredentials = axios.create({ withCredentials: true });
-
-export const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
+import { axiosWithCredentials, HTTP_SERVER } from "../api";
 export const USERS_API = `${HTTP_SERVER}/api/users`;
 
 export const signin = async (credentials: {

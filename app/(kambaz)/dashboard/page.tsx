@@ -37,6 +37,7 @@ export default function Dashboard() {
   const [course, setCourse] = useState<Course>(emptyCourse);
   const [showAllCourses, setShowAllCourses] = useState(false);
   const [allCourses, setAllCourses] = useState<Course[]>([]);
+  const [courseError, setCourseError] = useState("");
 
   useEffect(() => {
     if (!currentUser) {
@@ -92,16 +93,26 @@ export default function Dashboard() {
   }
 
   const setCourseField = (key: keyof Course, value: string) => {
+    setCourseError("");
     setCourse({ ...course, [key]: value });
   };
 
-  const resetForm = () => setCourse(emptyCourse);
+  const resetForm = () => {
+    setCourseError("");
+    setCourse(emptyCourse);
+  };
 
   const handleAddCourse = async () => {
+    const trimmedCourseName = course.name.trim();
+    if (!trimmedCourseName) {
+      setCourseError("Course name is required.");
+      return;
+    }
+
     const newCourse: Course = {
       ...course,
+      name: trimmedCourseName,
       number: course.number || "New Course Number",
-      name: course.name || "New Course",
       description: course.description || "New course description",
       image: course.image || "/images/reactjs.jpg",
     };
@@ -115,8 +126,15 @@ export default function Dashboard() {
     if (!course._id) {
       return;
     }
+    const trimmedCourseName = course.name.trim();
+    if (!trimmedCourseName) {
+      setCourseError("Course name is required.");
+      return;
+    }
+
     const updatedCourse = {
       ...course,
+      name: trimmedCourseName,
       image: course.image || "/images/reactjs.jpg",
     };
     await client.updateCourse(updatedCourse);
@@ -233,6 +251,7 @@ export default function Dashboard() {
               id="wd-add-new-course-click"
               variant="danger"
               onClick={handleAddCourse}
+              disabled={!course.name.trim()}
             >
               Add
             </Button>
@@ -240,7 +259,7 @@ export default function Dashboard() {
               id="wd-update-course-click"
               variant="primary"
               onClick={handleUpdateCourse}
-              disabled={!course._id}
+              disabled={!course._id || !course.name.trim()}
             >
               Update
             </Button>
@@ -248,6 +267,9 @@ export default function Dashboard() {
               Clear
             </Button>
           </div>
+          {courseError && (
+            <div className="text-danger small mt-2">{courseError}</div>
+          )}
           <hr />
         </div>
       )}

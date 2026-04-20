@@ -6,7 +6,7 @@ Use these seeded accounts to verify the Kambaz login flow:
 
 - Faculty: `jose` / `123`
 - Admin: `fury` / `123`
-- Student: `tony` / `123`
+- Student: `iron_man` / `stark123`
 
 ## Final Submission
 

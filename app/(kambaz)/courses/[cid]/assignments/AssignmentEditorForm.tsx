@@ -49,6 +49,7 @@ export default function AssignmentEditorForm({
   const [assignment, setAssignment] = useState<Assignment>(
     initialAssignment ?? createEmptyAssignment(cid),
   );
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (currentUser && currentUser.role !== "FACULTY") {
@@ -64,19 +65,27 @@ export default function AssignmentEditorForm({
     key: keyof Assignment,
     value: string | number,
   ) => {
+    setError("");
     setAssignment({ ...assignment, [key]: value } as Assignment);
   };
 
   const save = async () => {
+    if (!assignment.title.trim()) {
+      setError("Assignment title is required.");
+      return;
+    }
+
     if (isNew) {
       const createdAssignment = await client.createAssignmentForCourse(cid, {
         ...assignment,
+        title: assignment.title.trim(),
         course: cid,
       });
       dispatch(addAssignment(createdAssignment));
     } else {
       const updatedAssignment = await client.updateAssignment({
         ...assignment,
+        title: assignment.title.trim(),
         course: cid,
       });
       dispatch(updateAssignment(updatedAssignment));
@@ -254,13 +263,19 @@ export default function AssignmentEditorForm({
         </Row>
 
         <div className="text-end">
+          {error && <div className="text-danger small mb-2">{error}</div>}
           <Link
             href={`/courses/${cid}/assignments`}
             className="btn btn-secondary me-2"
           >
             Cancel
           </Link>
-          <Button variant="danger" onClick={() => void save()} type="button">
+          <Button
+            variant="danger"
+            onClick={() => void save()}
+            type="button"
+            disabled={!assignment.title.trim()}
+          >
             Save
           </Button>
         </div>

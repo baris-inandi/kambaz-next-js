@@ -1,8 +1,5 @@
-import axios from "axios";
 import { PazzaFolder, PazzaPost, PazzaPostInput, PazzaStats } from "./types";
-
-const axiosWithCredentials = axios.create({ withCredentials: true });
-const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
+import { axiosWithCredentials, HTTP_SERVER } from "../api";
 const COURSES_API = `${HTTP_SERVER}/api/courses`;
 
 const pazzaApi = (courseId: string) => `${COURSES_API}/${courseId}/pazza`;

@@ -1,8 +1,5 @@
-import axios from "axios";
 import { QuizAttempt, QuizDetails, QuizSummary } from "./types";
-
-const axiosWithCredentials = axios.create({ withCredentials: true });
-const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
+import { axiosWithCredentials, HTTP_SERVER } from "../api";
 const COURSES_API = `${HTTP_SERVER}/api/courses`;
 
 const quizzesApi = (courseId: string) => `${COURSES_API}/${courseId}/quizzes`;
