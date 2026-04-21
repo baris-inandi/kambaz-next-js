@@ -1,8 +1,9 @@
 "use client";
 
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Button,
   Card,
@@ -17,6 +18,7 @@ import {
 import { Course } from "../database";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { setCourses } from "../courses/reducer";
+import { setCurrentUser } from "../account/reducer";
 import * as client from "../courses/client";
 
 const emptyCourse: Course = {
@@ -29,6 +31,9 @@ const emptyCourse: Course = {
   image: "/images/reactjs.jpg",
 };
 
+const isUnauthorized = (error: unknown) =>
+  axios.isAxiosError(error) && error.response?.status === 401;
+
 export default function Dashboard() {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -38,6 +43,13 @@ export default function Dashboard() {
   const [showAllCourses, setShowAllCourses] = useState(false);
   const [allCourses, setAllCourses] = useState<Course[]>([]);
   const [courseError, setCourseError] = useState("");
+  const [dashboardError, setDashboardError] = useState("");
+
+  const endSession = useCallback(() => {
+    dispatch(setCurrentUser(null));
+    dispatch(setCourses([]));
+    router.replace("/account/signin");
+  }, [dispatch, router]);
 
   useEffect(() => {
     if (!currentUser) {
@@ -54,12 +66,16 @@ export default function Dashboard() {
         const myCourses = await client.findMyCourses();
         dispatch(setCourses(myCourses));
       } catch (error) {
-        console.error(error);
+        if (isUnauthorized(error)) {
+          endSession();
+          return;
+        }
+        setDashboardError("Unable to load your courses.");
       }
     };
 
     fetchCourses();
-  }, [currentUser, dispatch]);
+  }, [currentUser, dispatch, endSession]);
 
   useEffect(() => {
     const fetchAllCourses = async () => {
@@ -70,12 +86,16 @@ export default function Dashboard() {
         const availableCourses = await client.fetchAllCourses();
         setAllCourses(availableCourses);
       } catch (error) {
-        console.error(error);
+        if (isUnauthorized(error)) {
+          endSession();
+          return;
+        }
+        setDashboardError("Unable to load published courses.");
       }
     };
 
     fetchAllCourses();
-  }, [currentUser, showAllCourses]);
+  }, [currentUser, endSession, showAllCourses]);
 
   const isFaculty = currentUser?.role === "FACULTY";
   const enrolledCourseIds = useMemo(
@@ -94,11 +114,13 @@ export default function Dashboard() {
 
   const setCourseField = (key: keyof Course, value: string) => {
     setCourseError("");
+    setDashboardError("");
     setCourse({ ...course, [key]: value });
   };
 
   const resetForm = () => {
     setCourseError("");
+    setDashboardError("");
     setCourse(emptyCourse);
   };
 
@@ -175,14 +197,23 @@ export default function Dashboard() {
   };
 
   const handleToggleEnrollment = async (courseId: string) => {
-    const isEnrolled = enrolledCourseIds.has(courseId);
-    if (isEnrolled) {
-      await client.unenrollFromCourse(currentUser._id, courseId);
-    } else {
-      await client.enrollInCourse(currentUser._id, courseId);
+    setDashboardError("");
+    try {
+      const isEnrolled = enrolledCourseIds.has(courseId);
+      if (isEnrolled) {
+        await client.unenrollFromCourse(courseId);
+      } else {
+        await client.enrollInCourse(courseId);
+      }
+      const myCourses = await client.findMyCourses();
+      dispatch(setCourses(myCourses));
+    } catch (error) {
+      if (isUnauthorized(error)) {
+        endSession();
+        return;
+      }
+      setDashboardError("Unable to update enrollment.");
     }
-    const myCourses = await client.findMyCourses();
-    dispatch(setCourses(myCourses));
   };
 
   return (
@@ -285,6 +316,9 @@ export default function Dashboard() {
           Enrollments
         </Button>
       </div>
+      {dashboardError && (
+        <div className="text-danger small mt-2">{dashboardError}</div>
+      )}
       <hr />
       <div id="wd-dashboard-courses">
         <Row
@@ -295,6 +329,14 @@ export default function Dashboard() {
         >
           {displayedCourses.map((listedCourse) => {
             const isEnrolled = enrolledCourseIds.has(listedCourse._id);
+            const canOpenCourse = !showAllCourses || isEnrolled;
+            const courseImage = (
+              <CardImg
+                variant="top"
+                src={listedCourse.image || "/images/reactjs.jpg"}
+                style={{ height: "160px", objectFit: "cover" }}
+              />
+            );
             return (
               <Col
                 className="wd-dashboard-course"
@@ -302,16 +344,16 @@ export default function Dashboard() {
                 key={listedCourse._id}
               >
                 <Card>
-                  <Link
-                    href={`/courses/${listedCourse._id}/home`}
-                    className="wd-dashboard-course-link text-decoration-none text-dark"
-                  >
-                    <CardImg
-                      variant="top"
-                      src={listedCourse.image || "/images/reactjs.jpg"}
-                      style={{ height: "160px", objectFit: "cover" }}
-                    />
-                  </Link>
+                  {canOpenCourse ? (
+                    <Link
+                      href={`/courses/${listedCourse._id}/home`}
+                      className="wd-dashboard-course-link text-decoration-none text-dark"
+                    >
+                      {courseImage}
+                    </Link>
+                  ) : (
+                    courseImage
+                  )}
                   <CardBody>
                     <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
                       {[listedCourse.number, listedCourse.name]
@@ -325,12 +367,14 @@ export default function Dashboard() {
                       {listedCourse.description}
                     </CardText>
                     <div className="d-flex flex-wrap gap-2">
-                      <Link
-                        href={`/courses/${listedCourse._id}/home`}
-                        className="btn btn-primary"
-                      >
-                        Go
-                      </Link>
+                      {canOpenCourse && (
+                        <Link
+                          href={`/courses/${listedCourse._id}/home`}
+                          className="btn btn-primary"
+                        >
+                          Go
+                        </Link>
+                      )}
                       {isFaculty && (
                         <>
                           <Button
