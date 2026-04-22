@@ -192,7 +192,7 @@ export default function QuizQuestionEditorCard({
                   <FormCheck
                     type="radio"
                     name={`correct-choice-${question._id}`}
-                    label={`Correct option ${index + 1}`}
+                    label={`Option ${index + 1}`}
                     checked={Boolean(choice.isCorrect)}
                     onChange={() =>
                       updateChoice(choice._id, { isCorrect: true })
