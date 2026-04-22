@@ -177,7 +177,7 @@ export default function QuizEditorPageClient({ cid, qid }: Props) {
             </FormSelect>
           </div>
 
-          <div className="col-md-4">
+          <div className="hidden col-md-4">
             <FormLabel>Points</FormLabel>
             <FormControl value={calculateQuizPoints(quiz)} readOnly />
           </div>
